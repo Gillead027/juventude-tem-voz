@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Controle do telão – Juventude Tem Voz</title>
+<meta name="theme-color" content="#2230C9">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cobalto:#2230C9; --cobalto-fundo:#1A25A3; --sol:#FFD23F; --rosa:#FF7AB8; --mangue:#34D399;
+  --papel:#F7F8FF; --tinta:#10164D; --tinta-suave:#4A5190; --nevoa:rgba(247,248,255,.78);
+  --display:"Bricolage Grotesque","Arial Narrow",system-ui,sans-serif;
+  --body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;min-height:100%;background:var(--cobalto);color:var(--papel);font-family:var(--body);font-size:17px;line-height:1.4;-webkit-font-smoothing:antialiased;touch-action:manipulation}
+[hidden]{display:none!important}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--sol);outline-offset:3px;border-radius:12px}
+
+.wrap{max-width:520px;margin:0 auto;min-height:100svh;padding:max(18px,env(safe-area-inset-top)) 18px max(22px,env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:16px}
+.topo{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.marca{margin:0;font-family:var(--display);font-weight:800;font-variation-settings:"wdth" 80;font-size:1.3rem;letter-spacing:-.02em}
+.marca span{color:var(--sol)}
+.status{display:inline-flex;align-items:center;gap:8px;font-size:.88rem;color:var(--nevoa)}
+.status i{width:10px;height:10px;border-radius:50%;background:var(--rosa)}
+.status.on i{background:var(--mangue)}
+
+h1{margin:4px 0 0;font-family:var(--display);font-weight:800;font-variation-settings:"wdth" 80;font-size:2.2rem;line-height:.98;letter-spacing:-.02em}
+.sub{margin:0;color:var(--nevoa)}
+
+.op{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:84px;padding:16px 18px;border:0;border-radius:22px;background:var(--papel);color:var(--tinta);text-align:left;box-shadow:0 5px 0 var(--cobalto-fundo)}
+.op:nth-child(2){background:var(--sol)} .op:nth-child(3){background:var(--rosa);border-radius:22px 22px 22px 6px} .op:nth-child(4){background:var(--mangue)}
+.op:active{transform:translateY(3px);box-shadow:0 2px 0 var(--cobalto-fundo)}
+.op b{display:block;font-family:var(--display);font-weight:800;font-variation-settings:"wdth" 84;font-size:1.45rem;line-height:1}
+.op small{display:block;margin-top:4px;font-size:.92rem;font-weight:700}
+.op .n{font-family:var(--display);font-weight:800;font-size:2.2rem;color:var(--cobalto)}
+.lista-op{display:grid;gap:12px}
+
+.setas{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.bt{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:64px;padding:0 18px;border:0;border-radius:999px;background:var(--papel);color:var(--tinta);font-family:var(--display);font-weight:800;font-size:1.2rem}
+.bt.grande{min-height:120px;border-radius:28px;font-size:1.5rem;flex-direction:column}
+.bt.sol{background:var(--sol);box-shadow:0 5px 0 var(--tinta)}
+.bt.linha{background:transparent;color:var(--papel);box-shadow:inset 0 0 0 2px rgba(247,248,255,.55)}
+.bt:active{transform:translateY(3px)}
+.bt svg{width:28px;height:28px}
+.bt.grande svg{width:40px;height:40px}
+.conta{text-align:center;font-family:var(--display);font-weight:800;font-size:1.3rem}
+
+.itens{display:grid;gap:10px}
+.it{width:100%;padding:14px 16px;border:0;border-radius:18px;background:var(--papel);color:var(--tinta);text-align:left}
+.it:nth-child(4n+2){background:var(--sol)}
+.it q{display:block;font-family:var(--display);font-weight:700;font-variation-settings:"wdth" 88;font-size:1.05rem;line-height:1.2;quotes:"“" "”"}
+.it span{display:block;margin-top:6px;font-size:.88rem;font-weight:700;color:var(--cobalto)}
+.it:nth-child(4n+2) span{color:var(--tinta)}
+
+.card{padding:22px 20px;border-radius:22px;background:var(--papel);color:var(--tinta)}
+.card h2{margin:0 0 6px;font-family:var(--display);font-weight:800;font-size:1.5rem}
+.card p{margin:0 0 14px;color:var(--tinta-suave)}
+.campo{display:block;width:100%;min-height:64px;margin:0 0 14px;padding:0 16px;border-radius:16px;border:2.5px solid var(--tinta);background:#fff;color:var(--tinta);font-family:var(--display);font-weight:800;font-size:2rem;letter-spacing:.2em;text-transform:uppercase;text-align:center}
+.erro{margin:0 0 12px;padding:10px 14px;border-radius:12px;background:var(--rosa);color:var(--tinta);font-weight:700}
+.rodape{margin-top:auto;font-size:.85rem;color:var(--nevoa);text-align:center}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="topo">
+    <p class="marca">Juventude tem <span>voz</span></p>
+    <span class="status" id="status"><i></i><span id="status-txt">Conectando…</span></span>
+  </div>
+
+  <!-- digitar o código -->
+  <section id="v-codigo" hidden>
+    <div class="card">
+      <h2>Qual é o código do telão?</h2>
+      <p>Ele aparece na TV, embaixo do QR Code.</p>
+      <p class="erro" id="cod-erro" hidden>Não achei esse telão. Confere o código na TV e tenta de novo.</p>
+      <form id="form-cod">
+        <input class="campo" id="cod" maxlength="4" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="Código do telão">
+        <button class="bt sol" type="submit" style="width:100%">Conectar</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- esperando o telão -->
+  <section id="v-espera" hidden>
+    <h1>Procurando o telão…</h1>
+    <p class="sub">Fica de olho na TV: quando conectar, aparece "Celular conectado!".</p>
+  </section>
+
+  <!-- cardápio -->
+  <section id="v-menu" hidden>
+    <h1>O que você quer ver no telão?</h1>
+    <p class="sub" style="margin:8px 0 16px">Toque e olhe pra TV.</p>
+    <div class="lista-op">
+      <button class="op" type="button" data-abrir="memorias"><span><b>Memórias do CRJ</b><small>O que o CRJ representa pra juventude</small></span><span class="n" id="n-mem"></span></button>
+      <button class="op" type="button" data-abrir="fotos"><span><b>Fotos</b><small>Momentos que marcaram</small></span><span class="n" id="n-fot"></span></button>
+      <button class="op" type="button" data-abrir="decisoes"><span><b>Se a decisão fosse nossa…</b><small>O que a juventude mudaria</small></span><span class="n" id="n-dec"></span></button>
+      <button class="op" type="button" data-abrir="nums"><span><b>O circuito em números</b><small>Quantos participaram e o que mais acertaram</small></span></button>
+    </div>
+  </section>
+
+  <!-- grade: escolher uma memória ou foto -->
+  <section id="v-grade" hidden>
+    <button class="bt linha" type="button" data-cmd="voltar" style="align-self:flex-start"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>Menu</button>
+    <h1 id="grade-titulo" style="margin-top:14px"></h1>
+    <p class="sub" style="margin:6px 0 14px">Toque em uma e ela abre no telão.</p>
+    <div class="itens" id="itens"></div>
+  </section>
+
+  <!-- vendo uma por uma -->
+  <section id="v-ver" hidden style="display:flex;flex-direction:column;gap:16px">
+    <button class="bt linha" type="button" data-cmd="voltar" style="align-self:flex-start"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>Voltar</button>
+    <p class="conta" id="conta"></p>
+    <div class="setas">
+      <button class="bt grande" type="button" data-cmd="ant"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>Anterior</button>
+      <button class="bt grande sol" type="button" data-cmd="prox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>Próximo</button>
+    </div>
+    <button class="bt linha" type="button" data-cmd="menu">Ir para o menu</button>
+  </section>
+
+  <!-- números: rolar a tela da TV -->
+  <section id="v-nums" hidden style="display:flex;flex-direction:column;gap:16px">
+    <button class="bt linha" type="button" data-cmd="voltar" style="align-self:flex-start"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>Menu</button>
+    <h1>O circuito em números</h1>
+    <p class="sub">Use os botões pra descer e subir a tela da TV.</p>
+    <div class="setas">
+      <button class="bt grande" type="button" data-cmd="ant"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 15l-6-6-6 6"/></svg>Subir</button>
+      <button class="bt grande sol" type="button" data-cmd="prox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>Descer</button>
+    </div>
+  </section>
+
+  <p class="rodape">CRJ Flexal · Memória Jovem do CRJ<br>Este controle só mexe no telão. Nada é salvo do seu celular.</p>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="config.js"></script>
+<script>
+const CFG = window.JTV_CONFIG || {};
+const $ = (id) => document.getElementById(id);
+const sb = window.supabase && CFG.supabaseUrl ? window.supabase.createClient(CFG.supabaseUrl, CFG.supabaseAnonKey, {auth:{persistSession:false, autoRefreshToken:false}}) : null;
+let canal = null, sala = "", ultimo = null, espera = null, grupo = "memorias";
+
+const VISOES = ["codigo","espera","menu","grade","ver","nums"];
+function mostra(v){ VISOES.forEach(x => $("v-" + x).hidden = x !== v); }
+function status(on, txt){ $("status").classList.toggle("on", on); $("status-txt").textContent = txt; }
+
+function envia(acao, extra){
+  if (!canal) return;
+  if (navigator.vibrate) navigator.vibrate(15);
+  canal.send({ type: "broadcast", event: "cmd", payload: Object.assign({ acao }, extra || {}) });
+}
+
+function render(e){
+  ultimo = e; clearTimeout(espera);
+  status(true, "Conectado ao telão " + sala);
+  if (e.contagem){ $("n-mem").textContent = e.contagem.memorias; $("n-fot").textContent = e.contagem.fotos; $("n-dec").textContent = e.contagem.decisoes; }
+  if (e.tela === "convite" || e.tela === "menu") mostra("menu");
+  else if (e.tela === "grade"){
+    grupo = e.grupo;
+    $("grade-titulo").textContent = e.grupo === "fotos" ? "Fotos" : "Memórias do CRJ";
+    const box = $("itens"); box.replaceChildren();
+    (e.itens || []).forEach((it, i) => {
+      const b = document.createElement("button"); b.type = "button"; b.className = "it";
+      const q = document.createElement("q"); q.textContent = it.q + (it.q.length >= 90 ? "…" : "");
+      const w = document.createElement("span"); w.textContent = it.w;
+      b.append(q, w); b.addEventListener("click", () => envia("item", { grupo, i }));
+      box.appendChild(b);
+    });
+    if (!(e.itens || []).length){ const p = document.createElement("p"); p.className = "sub"; p.textContent = "Ainda não tem nada aqui."; box.appendChild(p); }
+    mostra("grade");
+  }
+  else if (e.tela === "ver"){ $("conta").textContent = (e.pos + 1) + " de " + e.total; mostra("ver"); }
+  else if (e.tela === "nums") mostra("nums");
+}
+
+function conecta(cod){
+  sala = (cod || "").toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 4);
+  if (sala.length !== 4){ mostra("codigo"); return; }
+  if (canal) sb.removeChannel(canal);
+  mostra("espera"); status(false, "Conectando…");
+  canal = sb.channel("jtv-telao-" + sala, { config: { broadcast: { self: false } } });
+  canal.on("broadcast", { event: "estado" }, ({ payload }) => render(payload));
+  canal.subscribe((st) => {
+    if (st === "SUBSCRIBED"){
+      envia("ola");
+      espera = setTimeout(() => { if (!ultimo){ status(false, "Telão não encontrado"); $("cod").value = sala; $("cod-erro").hidden = false; mostra("codigo"); } }, 6000);
+    } else if (st === "CHANNEL_ERROR" || st === "TIMED_OUT"){ status(false, "Sem conexão"); }
+  });
+  try { history.replaceState(null, "", "?s=" + sala); } catch (e) {}
+}
+
+document.querySelectorAll("[data-abrir]").forEach(b => b.addEventListener("click", () => envia("abrir", { alvo: b.dataset.abrir })));
+document.querySelectorAll("[data-cmd]").forEach(b => b.addEventListener("click", () => envia(b.dataset.cmd)));
+$("form-cod").addEventListener("submit", (e) => { e.preventDefault(); $("cod-erro").hidden = true; ultimo = null; conecta($("cod").value); });
+
+/* o telão some (TV desligada, internet caiu): volta a procurar quando o celular voltar pra página */
+document.addEventListener("visibilitychange", () => { if (!document.hidden && canal && sala) envia("ola"); });
+
+if (!sb){ status(false, "Indisponível"); mostra("codigo"); }
+else {
+  const s = new URLSearchParams(location.search).get("s");
+  if (s) conecta(s); else mostra("codigo");
+}
+</script>
+</body>
+</html>

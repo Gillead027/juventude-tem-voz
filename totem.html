@@ -115,6 +115,22 @@ img{-webkit-user-drag:none;user-select:none}
 .aviso h1{margin:0;font-family:var(--display);font-weight:800;font-size:calc(var(--u)*6)}
 .aviso p{margin:0;font-size:calc(var(--u)*2.8);color:var(--nevoa);max-width:44ch}
 .aviso a{color:var(--sol)}
+/* ---------- telão: controle pelo celular ---------- */
+.qr-grande{display:flex;align-items:center;gap:calc(var(--u)*3.4);margin:1vh 0 0;padding:calc(var(--u)*2.6);border-radius:calc(var(--u)*3.4);background:var(--papel);color:var(--tinta);max-width:100%}
+.qr-grande .qr{flex:none;width:calc(var(--u)*24);height:calc(var(--u)*24)}
+.qr-grande b{display:block;font-family:var(--display);font-weight:800;font-variation-settings:"wdth" 82;font-size:calc(var(--u)*4.4);line-height:1}
+.qr-grande span{display:block;margin-top:calc(var(--u)*1.2);font-size:calc(var(--u)*2.4)}
+.qr-grande .cod{display:inline-block;margin-top:calc(var(--u)*1.4);padding:calc(var(--u)*.6) calc(var(--u)*1.6);border-radius:calc(var(--u)*1.2);background:var(--sol);font-family:var(--display);font-weight:800;font-size:calc(var(--u)*3.2);letter-spacing:.12em}
+.qr svg,.qr-mini svg{display:block;width:100%;height:100%}
+.qr-canto{position:fixed;top:calc(var(--u)*1.6);right:calc(var(--u)*1.6);z-index:25;display:flex;align-items:center;gap:calc(var(--u)*1.4);padding:calc(var(--u)*1.2);border-radius:calc(var(--u)*2);background:var(--papel);color:var(--tinta)}
+.qr-canto .qr-mini{width:calc(var(--u)*13);height:calc(var(--u)*13)}
+.qr-canto b{display:block;font-family:var(--display);font-weight:800;font-size:calc(var(--u)*2.2);line-height:1.05}
+.qr-canto span{display:block;margin-top:calc(var(--u)*.6);font-family:var(--display);font-weight:800;font-size:calc(var(--u)*2.2);letter-spacing:.1em;color:var(--cobalto)}
+body.remoto .topo .marca{visibility:hidden}
+body.remoto .topo{min-height:calc(var(--u)*17)}
+body.remoto #t-convite .onda{height:calc(var(--u)*8);margin:3vh 0}
+body.remoto #t-convite .titulo{font-size:calc(var(--u)*13)}
+.aviso-conectou{position:fixed;left:50%;top:calc(var(--u)*2.4);transform:translateX(-50%);z-index:40;padding:calc(var(--u)*1.6) calc(var(--u)*3.2);border-radius:999px;background:var(--mangue);color:var(--tinta);font-family:var(--display);font-weight:800;font-size:calc(var(--u)*2.8);animation:entra .3s ease both}
 .sair-canto{position:fixed;top:0;left:0;width:72px;height:72px;z-index:30}
 @media (prefers-reduced-motion:reduce){ *{animation:none!important} }
 </style>
@@ -141,6 +157,10 @@ img{-webkit-user-drag:none;user-select:none}
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11V5a2 2 0 1 1 4 0v6"/><path d="M13 9.5a2 2 0 1 1 4 0V12"/><path d="M17 11a2 2 0 1 1 4 0v3a7 7 0 0 1-7 7h-1.5a7 7 0 0 1-5.6-2.8L4 14.5a2 2 0 0 1 3-2.6L9 14"/></svg>
     Toque para ver
   </span>
+  <div class="qr-grande" id="qr-grande" hidden>
+    <div class="qr" id="qr-a"></div>
+    <div><b>Aponte a câmera do celular e controle o telão</b><span>Ou entre em juventude-tem-voz.vercel.app/controle e digite o código</span><span class="cod" id="cod-a"></span></div>
+  </div>
   <p class="convite-sub" id="convite-sub">O que a juventude de Flexal disse sobre o CRJ, em palavras e fotos.</p>
 </button>
 
@@ -189,10 +209,15 @@ img{-webkit-user-drag:none;user-select:none}
   </div>
 </section>
 
+<!-- QR pequeno nas outras telas (modo telão) -->
+<div class="qr-canto" id="qr-canto" hidden><div class="qr-mini" id="qr-b"></div><div><b>Controle pelo<br>celular</b><span id="cod-b"></span></div></div>
+<div class="aviso-conectou" id="conectou" hidden>Celular conectado!</div>
+
 <!-- canto para o educador sair: segurar 3 segundos -->
 <div class="sair-canto" id="sair-canto" aria-hidden="true"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
 <script src="config.js"></script>
 <script>
 const CFG = window.JTV_CONFIG || {};
@@ -279,6 +304,7 @@ function montaMenu(){
   $("barras").replaceChildren(...acertos.slice().sort((a,b) => b.pct - a.pct).map(a => el("div",{class:"barra"},
     el("div",{class:"lab"}, el("span",{text:a.t}), el("b",{text:a.pct + "%"})),
     el("div",{class:"trilho"}, el("i",{style:"width:" + a.pct + "%"})))));
+  setTimeout(publica, 0);
   $("convite-sub").textContent = memorias.length
     ? memorias.length + " memórias e " + fotos.length + " fotos deixadas pela juventude de Flexal."
     : "O que a juventude de Flexal disse sobre o CRJ, em palavras e fotos.";
@@ -290,6 +316,8 @@ function mostra(id){
   tela = id;
   clearInterval(trocaFoto);
   armaOcioso();
+  if (REMOTO) $("qr-canto").hidden = (id === "convite");
+  publica();
 }
 
 let grupoAtual = "memorias";
@@ -297,7 +325,7 @@ function abreGrade(grupo){
   grupoAtual = grupo;
   const fonte = grupo === "fotos" ? fotos : memorias;
   $("grade-titulo").replaceChildren(grupo === "fotos" ? "Fotos" : "Memórias do CRJ",
-    el("span",{class:"secao-sub", text:"Toque em uma para ver inteira"}));
+    el("span",{class:"secao-sub", text: REMOTO ? "Escolha uma pelo celular" : "Toque em uma para ver inteira"}));
   if (!fonte.length){
     $("grade").replaceChildren(el("p",{class:"vazio", text:"Ainda não tem nada aqui. Logo, logo aparece!"}));
   } else {
@@ -333,9 +361,10 @@ function desenha(dir){
   }
   s.style.setProperty("--de", dir > 0 ? "6vw" : dir < 0 ? "-6vw" : "0");
   $("palco").replaceChildren(s);
-  $("conta").replaceChildren(el("span",{text:(pos + 1) + " de " + lista.length}), el("span",{class:"dica", text:"ou deslize para o lado"}));
+  $("conta").replaceChildren(el("span",{text:(pos + 1) + " de " + lista.length}), el("span",{class:"dica", text: REMOTO ? "passe pelo celular" : "ou deslize para o lado"}));
   $("ant").disabled = lista.length < 2; $("prox").disabled = lista.length < 2;
   armaOcioso();
+  publica();
 }
 const passa = (d) => { if (lista.length < 2) return; pos = (pos + d + lista.length) % lista.length; desenha(d); };
 $("prox").addEventListener("click", () => passa(1));
@@ -371,11 +400,85 @@ $("sair-canto").addEventListener("pointerdown", () => { segura = setTimeout(() =
 /* tela cheia no primeiro toque */
 document.addEventListener("pointerdown", () => { if (!document.fullscreenElement && document.documentElement.requestFullscreen) document.documentElement.requestFullscreen().catch(() => {}); }, {once:true});
 
+/* ---------- telão: controle pelo celular ---------- */
+const REMOTO = location.pathname.replace(/\/$/, "").endsWith("/telao") || new URLSearchParams(location.search).has("telao");
+let canalTelao = null, sala = "";
+function novaSala(){
+  const L = "ABCDEFGHJKMNPQRSTUVWXYZ23456789"; let c = "";
+  const r = crypto.getRandomValues(new Uint32Array(4));
+  for (const n of r) c += L[n % L.length];
+  return c;
+}
+function desenhaQR(){
+  const url = location.origin + "/controle?s=" + sala;
+  if (window.qrcode){
+    const q = qrcode(0, "M"); q.addData(url); q.make();
+    const svg = q.createSvgTag({ cellSize: 4, margin: 2, scalable: true });
+    $("qr-a").innerHTML = svg; $("qr-b").innerHTML = svg;
+  }
+  $("cod-a").textContent = sala; $("cod-b").textContent = sala;
+}
+function estado(){
+  const e = { tela, sala };
+  if (tela === "grade"){
+    const fonte = grupoAtual === "fotos" ? fotos : memorias;
+    e.grupo = grupoAtual;
+    e.itens = fonte.map(({l}) => ({ q: (grupoAtual === "fotos" && l.foto_sobre ? l.foto_sobre : l.crj_representa).slice(0, 90), w: assinatura(l) }));
+  }
+  if (tela === "ver"){ e.grupo = grupoAtual; e.pos = pos; e.total = lista.length; }
+  if (tela === "menu" || tela === "convite"){ e.contagem = { memorias: memorias.length, fotos: fotos.length, decisoes: decisoes.length }; }
+  return e;
+}
+function publica(){ if (canalTelao) canalTelao.send({ type: "broadcast", event: "estado", payload: estado() }).catch(() => {}); }
+function rola(d){ const r = document.querySelector(".tela:not([hidden]) .rolagem"); if (r) r.scrollBy({ top: d * r.clientHeight * 0.7, behavior: "smooth" }); }
+let avisoT = null;
+function executa(c){
+  if (!c || typeof c.acao !== "string") return;
+  armaOcioso();
+  switch (c.acao){
+    case "ola":
+      $("conectou").hidden = false; clearTimeout(avisoT); avisoT = setTimeout(() => $("conectou").hidden = true, 2500);
+      publica(); break;
+    case "menu": mostra("menu"); break;
+    case "abrir":
+      if (c.alvo === "memorias" || c.alvo === "fotos") abreGrade(c.alvo);
+      else if (c.alvo === "decisoes") abreSlides("decisoes", 0, "menu");
+      else if (c.alvo === "nums") mostra("nums");
+      break;
+    case "item": {
+      const g = c.grupo === "fotos" ? "fotos" : "memorias";
+      const n = Number(c.i) || 0;
+      const fonte = g === "fotos" ? fotos : memorias;
+      if (n >= 0 && n < fonte.length) abreSlides(g, n, "grade");
+      break;
+    }
+    case "prox": if (tela === "ver") passa(1); else rola(1); break;
+    case "ant": if (tela === "ver") passa(-1); else rola(-1); break;
+    case "voltar":
+      if (tela === "ver") (origem === "grade" ? mostra("grade") : mostra("menu"));
+      else if (tela === "grade" || tela === "nums") mostra("menu");
+      else mostra("convite");
+      break;
+  }
+}
+function ligaRemoto(){
+  document.body.classList.add("remoto");
+  sala = sessionStorage.getItem("jtv-sala") || novaSala();
+  try { sessionStorage.setItem("jtv-sala", sala); } catch (e) {}
+  desenhaQR();
+  $("qr-grande").hidden = false;
+  document.querySelector("#t-convite .toque").hidden = true;
+  canalTelao = sb.channel("jtv-telao-" + sala, { config: { broadcast: { self: false } } });
+  canalTelao.on("broadcast", { event: "cmd" }, ({ payload }) => executa(payload));
+  canalTelao.subscribe((st) => { if (st === "SUBSCRIBED") publica(); });
+}
+
 /* ---------- início ---------- */
 async function inicia(){
   try {
     await carrega();
     $("v-carregando").hidden = true; $("v-erro").hidden = true;
+    if (REMOTO && !canalTelao) ligaRemoto();
     if (tela === "convite") $("t-convite").hidden = false;
   } catch (e) {
     $("v-carregando").hidden = true; $("v-erro").hidden = false;
