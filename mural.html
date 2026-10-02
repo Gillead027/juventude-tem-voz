@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Mural – Juventude Tem Voz</title>
+<meta name="theme-color" content="#2230C9">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style id="page-size">@page{size:A3 landscape;margin:12mm}</style>
+<style>
+:root{
+  --cobalto:#2230C9; --cobalto-fundo:#1A25A3; --sol:#FFD23F; --rosa:#FF7AB8; --mangue:#34D399;
+  --papel:#F7F8FF; --tinta:#10164D; --tinta-suave:#4A5190; --nevoa:rgba(247,248,255,.75);
+  --display:"Bricolage Grotesque","Arial Narrow",system-ui,sans-serif;
+  --body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--cobalto);color:var(--papel);font-family:var(--body);font-size:16px;line-height:1.45;-webkit-font-smoothing:antialiased}
+[hidden]{display:none!important}
+button,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--sol);outline-offset:3px;border-radius:10px}
+
+/* barra de ferramentas (não sai na impressão) */
+.tools{position:sticky;top:0;z-index:20;background:var(--tinta);color:var(--papel)}
+.tools .in{max-width:1400px;margin:0 auto;padding:12px 20px;display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.tools .label{margin-right:auto;font-weight:700}
+.tools .hint{width:100%;margin:0;font-size:.88rem;color:var(--nevoa)}
+.btn{cursor:pointer;display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:0 18px;border-radius:999px;border:0;background:var(--sol);color:var(--tinta);font-weight:700;text-decoration:none;white-space:nowrap}
+.btn.line{background:transparent;color:var(--papel);box-shadow:inset 0 0 0 2px rgba(247,248,255,.55)}
+.btn[disabled]{opacity:.55;cursor:wait}
+select.sel{min-height:42px;padding:0 12px;border-radius:999px;border:0;background:var(--papel);color:var(--tinta);font-weight:700}
+
+.msg-box{max-width:520px;margin:12vh auto 0;padding:28px 24px;background:var(--papel);color:var(--tinta);border-radius:22px;text-align:center}
+.msg-box h1{margin:0 0 8px;font-family:var(--display);font-weight:800;font-variation-settings:"wdth" 80;font-size:2rem;line-height:1.05}
+.msg-box p{margin:0 0 18px;color:var(--tinta-suave)}
+
+/* mural */
+.mural{max-width:1400px;margin:0 auto;padding:40px 24px 60px}
+.capa{display:grid;grid-template-columns:1fr;gap:28px;align-items:end;margin:0 0 44px}
+@media (min-width:900px){ .capa{grid-template-columns:1.3fr 1fr} }
+.capa .kicker{margin:0 0 14px;color:var(--nevoa);font-size:1.05rem}
+.capa .kicker b{color:var(--papel)}
+.capa h1{margin:0;font-family:var(--display);font-weight:800;font-variation-settings:"wdth" 75,"opsz" 96;font-size:clamp(3.6rem,10vw,8.5rem);line-height:.82;letter-spacing:-.035em}
+.capa h1 span{display:block;color:var(--sol)}
+.wave{display:flex;align-items:center;gap:5px;height:70px;margin:22px 0 0}
+.wave i{flex:1;max-width:9px;border-radius:5px;background:var(--sol);height:var(--h)}
+.wave i:nth-child(5n+2){background:var(--rosa)} .wave i:nth-child(7n+4){background:var(--mangue)}
+.nums{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.num{padding:18px 18px 16px;border-radius:20px;background:var(--papel);color:var(--tinta)}
+.num b{display:block;font-family:var(--display);font-weight:800;font-variation-settings:"wdth" 80;font-size:3rem;line-height:.95;letter-spacing:-.02em;color:var(--cobalto)}
+.num span{display:block;margin-top:4px;color:var(--tinta-suave)}
+
+.sec-title{margin:0 0 6px;font-family:var(--display);font-weight:800;font-variation-settings:"wdth" 80;font-size:clamp(2rem,4.5vw,3.2rem);line-height:1;letter-spacing:-.02em}
+.sec-sub{margin:0 0 24px;color:var(--nevoa);max-width:60ch}
+
+.grid{columns:3 300px;column-gap:18px}
+.card{break-inside:avoid;margin:0 0 18px;border-radius:22px;overflow:hidden;background:var(--papel);color:var(--tinta);display:inline-block;width:100%}
+.card:nth-child(4n+2){background:var(--sol)}
+.card:nth-child(4n+3){border-radius:22px 22px 22px 6px}
+.card img{display:block;width:100%;height:auto;max-height:520px;object-fit:cover;background:var(--cobalto-fundo)}
+.card .cap{margin:0;padding:10px 18px 0;font-size:.9rem;color:var(--tinta-suave)}
+.card .txt{padding:16px 18px 18px}
+.card blockquote{margin:0;font-family:var(--display);font-weight:700;font-variation-settings:"wdth" 88,"opsz" 36;font-size:1.32rem;line-height:1.18;letter-spacing:-.01em}
+.card .extra{margin:12px 0 0;font-size:.98rem}
+.card .extra b{display:block;font-size:.84rem;color:var(--tinta-suave)}
+.card .who{margin:14px 0 0;font-weight:700;color:var(--cobalto)}
+.card:nth-child(4n+2) .who,.card:nth-child(4n+2) .extra b,.card:nth-child(4n+2) .cap{color:var(--tinta)}
+
+.decide{margin:56px 0 0;padding:34px 28px;border-radius:28px 28px 28px 8px;background:var(--rosa);color:var(--tinta)}
+.decide .sec-sub{color:var(--tinta)}
+.decide-list{list-style:none;margin:0;padding:0;columns:2 320px;column-gap:28px}
+.decide-list li{break-inside:avoid;margin:0 0 18px;padding:0 0 18px;border-bottom:2px dashed rgba(16,22,77,.25);font-family:var(--display);font-weight:700;font-variation-settings:"wdth" 88;font-size:1.25rem;line-height:1.2}
+.decide-list li small{display:block;margin-top:6px;font-family:var(--body);font-weight:700;font-size:.9rem}
+
+.foot{margin:48px 0 0;color:var(--nevoa);font-size:.95rem}
+
+/* apresentação */
+.show{position:fixed;inset:0;z-index:50;background:var(--cobalto);color:var(--papel);display:flex;flex-direction:column}
+.show .stage{flex:1;display:flex;align-items:center;justify-content:center;padding:4vh 5vw;min-height:0}
+.slide{width:100%;max-width:1500px;display:grid;gap:4vw;align-items:center;animation:entra .5s ease both}
+@keyframes entra{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.slide.com-foto{grid-template-columns:1fr 1fr}
+.slide img{width:100%;max-height:78vh;object-fit:contain;border-radius:24px;background:var(--cobalto-fundo)}
+.slide blockquote{margin:0;font-family:var(--display);font-weight:800;font-variation-settings:"wdth" 82,"opsz" 96;font-size:clamp(2rem,4.4vw,4.4rem);line-height:1.04;letter-spacing:-.02em}
+.slide .who{margin:3vh 0 0;font-size:clamp(1.1rem,1.8vw,1.8rem);font-weight:700;color:var(--sol)}
+.slide .cap{margin:1.5vh 0 0;font-size:clamp(1rem,1.4vw,1.4rem);color:var(--nevoa)}
+.slide .big{font-family:var(--display);font-weight:800;font-variation-settings:"wdth" 75,"opsz" 96;font-size:clamp(4rem,11vw,11rem);line-height:.82;letter-spacing:-.035em}
+.slide .big span{display:block;color:var(--sol)}
+.slide.rosa{background:var(--rosa);color:var(--tinta);padding:6vh 5vw;border-radius:36px 36px 36px 10px}
+.slide.rosa .who{color:var(--tinta)}
+.show .bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 20px;background:rgba(16,22,77,.55)}
+.show .bar .count{font-size:.95rem;color:var(--nevoa)}
+.show .bar .ctrl{display:flex;gap:8px}
+
+/* impressão */
+@media print{
+  html,body{background:var(--cobalto)}
+  .tools,.no-print{display:none!important}
+  html,body,*{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .mural{max-width:none;padding:0}
+  .capa{grid-template-columns:1.25fr 1fr;min-height:250mm;align-content:center;break-after:page;margin:0}
+  .capa h1{font-size:110pt}
+  .capa .kicker{font-size:16pt}
+  .wave{height:110px}
+  .num b{font-size:54pt} .num span{font-size:15pt}
+  .sec-title{font-size:40pt} .sec-sub{font-size:15pt}
+  .grid{columns:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:8mm;align-items:start}
+  .card{margin:0;break-inside:avoid;page-break-inside:avoid}
+  .sec-title{break-after:avoid}
+  .card img{max-height:120mm}
+  .card .cap{font-size:12pt}
+  .card blockquote{font-size:21pt}
+  .card .extra{font-size:13pt} .card .extra b{font-size:11pt}
+  .card .who{font-size:14pt}
+  .decide{break-before:page;break-inside:avoid-page}
+  .decide-list li{font-size:20pt} .decide-list li small{font-size:12pt}
+  .foot{font-size:12pt}
+}
+@media (prefers-reduced-motion:reduce){ *{animation:none!important;transition:none!important} }
+</style>
+</head>
+<body>
+
+<div class="tools" id="tools" hidden><div class="in">
+  <span class="label" id="resumo">Montando o mural…</span>
+  <select class="sel" id="tamanho" aria-label="Tamanho do papel">
+    <option value="A3 landscape">Papel A3 deitado</option>
+    <option value="A4 landscape">Papel A4 deitado</option>
+    <option value="A4 portrait">Papel A4 em pé</option>
+  </select>
+  <button class="btn" id="imprimir" type="button">Imprimir ou salvar PDF</button>
+  <button class="btn" id="apresentar" type="button">Modo apresentação</button>
+  <button class="btn line" id="zip" type="button">Baixar fotos (ZIP)</button>
+  <p class="hint">Entram só jovens que autorizaram o uso. Quem pediu "sem meu nome" aparece como Jovem do CRJ Flexal. Para tirar alguém, desmarque "Aparece no mural" no painel e gere de novo.</p>
+</div></div>
+
+<section class="msg-box" id="v-login" hidden>
+  <h1>Entre pelo painel</h1>
+  <p>O mural usa as respostas do banco, então só abre para a equipe logada.</p>
+  <a class="btn" href="/painel">Ir para o painel</a>
+</section>
+<section class="msg-box" id="v-erro" hidden>
+  <h1>Não deu pra montar o mural</h1>
+  <p id="erro-txt">Confira a internet e recarregue a página.</p>
+  <button class="btn" type="button" onclick="location.reload()">Tentar de novo</button>
+</section>
+
+<main class="mural" id="mural" hidden><div class="mural-inner">
+  <header class="capa">
+    <div>
+      <p class="kicker"><b>CRJ Flexal</b><br>Circuito Formativo: Nada sobre nós, sem nós · outubro de 2026</p>
+      <h1>Juventude tem <span>voz</span></h1>
+      <div class="wave" id="wave" aria-hidden="true"></div>
+    </div>
+    <div class="nums" id="nums"></div>
+  </header>
+
+  <h2 class="sec-title">Memória Jovem do CRJ</h2>
+  <p class="sec-sub">O que o CRJ representa pra quem vive ele todo dia, nas palavras de quem participou do circuito.</p>
+  <div class="grid" id="grid"></div>
+
+  <section class="decide" id="decide-box" hidden>
+    <h2 class="sec-title">Se a decisão fosse nossa…</h2>
+    <p class="sec-sub">O que a juventude de Flexal mudaria no CRJ e no bairro.</p>
+    <ul class="decide-list" id="decide"></ul>
+  </section>
+
+  <p class="foot">Juventude Tem Voz · Quiz avaliativo e Memória Jovem do CRJ Flexal, Centro de Referência da Juventude · Devolutiva de 28 de outubro de 2026</p>
+</div></main>
+
+<section class="show no-print" id="show" hidden aria-label="Apresentação">
+  <div class="stage" id="stage"></div>
+  <div class="bar">
+    <span class="count" id="show-count"></span>
+    <div class="ctrl">
+      <button class="btn line" id="ant" type="button">Anterior</button>
+      <button class="btn line" id="pausa" type="button">Pausar</button>
+      <button class="btn" id="prox" type="button">Próximo</button>
+      <button class="btn line" id="sair" type="button">Sair</button>
+    </div>
+  </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="config.js"></script>
+<script>
+const CFG = window.JTV_CONFIG || {};
+const $ = (id) => document.getElementById(id);
+let sb = null, itens = [], decisoes = [], slides = [], atual = 0, timer = null, pausado = false;
+
+function el(tag, attrs, ...kids){
+  const e = document.createElement(tag);
+  if (attrs) for (const [k, v] of Object.entries(attrs)) {
+    if (k === "class") e.className = v; else if (k === "text") e.textContent = v; else e.setAttribute(k, v);
+  }
+  kids.flat().forEach(k => k != null && k !== "" && e.append(k));
+  return e;
+}
+
+/* nome exibido: "com meu nome" = primeiro e último nome; "sem meu nome" = Jovem do CRJ Flexal */
+function assinatura(l){
+  if (l.autorizacao === "Sim, com meu nome"){
+    const p = (l.nome || "").trim().split(/\s+/);
+    const nome = p.length > 1 ? p[0] + " " + p[p.length - 1] : p[0];
+    const of = (l.oficinas || []).filter(o => o !== "Outra").join(", ");
+    return nome + (of ? " · " + of : "");
+  }
+  return "Jovem do CRJ Flexal";
+}
+const ehTeste = (l) => /^\s*teste/i.test(l.observacao || "");
+const entraNoMural = (l) => l.autorizacao && l.autorizacao.startsWith("Sim") && l.no_mural !== false && !ehTeste(l);
+
+/* onda */
+(function(){
+  for (let k = 0; k < 40; k++){
+    const b = document.createElement("i");
+    b.style.setProperty("--h", Math.min(70, 16 + Math.round(Math.abs(Math.sin(k * 1.7) * 44 + Math.sin(k * .45) * 16))) + "px");
+    $("wave").appendChild(b);
+  }
+})();
+
+/* ---------- início ---------- */
+if (!CFG.supabaseUrl || !CFG.supabaseAnonKey || !window.supabase){
+  $("erro-txt").textContent = "Falta configurar o Supabase no config.js."; $("v-erro").hidden = false;
+} else {
+  sb = window.supabase.createClient(CFG.supabaseUrl, CFG.supabaseAnonKey);
+  sb.auth.getSession().then(({data}) => data.session ? monta() : ($("v-login").hidden = false));
+}
+
+async function monta(){
+  const { data, error } = await sb.from("respostas").select("*").order("criado_em", { ascending: true }).limit(2000);
+  if (error){ $("v-erro").hidden = false; return; }
+  const todas = data || [];
+  const validas = todas.filter(l => !ehTeste(l));
+  const autorizados = validas.filter(entraNoMural);
+
+  // fotos: links assinados válidos por 6 horas
+  const comFoto = autorizados.filter(l => l.foto_path);
+  const urls = {};
+  if (comFoto.length){
+    const { data: assin } = await sb.storage.from("memoria-fotos").createSignedUrls(comFoto.map(l => l.foto_path), 21600);
+    (assin || []).forEach(s => { if (s.signedUrl) urls[s.path] = s.signedUrl; });
+  }
+  itens = autorizados.map(l => ({ l, foto: l.foto_path ? urls[l.foto_path] || null : null }));
+  decisoes = autorizados.filter(l => l.se_a_decisao).map(l => ({ texto: l.se_a_decisao, quem: assinatura(l) }));
+
+  // números da capa (todos os jovens que participaram, não só os autorizados)
+  const unicos = new Set(validas.map(l => (l.nome || "").trim().toLowerCase().replace(/\s+/g, " "))).size;
+  const nums = [
+    [unicos, "jovens participaram"],
+    [itens.length, "memórias no mural"],
+    [itens.filter(x => x.foto).length, "fotos de momentos no CRJ"],
+    [decisoes.length, "ideias para o CRJ e o bairro"]
+  ];
+  $("nums").replaceChildren(...nums.map(([n, t]) => el("div",{class:"num"}, el("b",{text:String(n)}), el("span",{text:t}))));
+
+  // cards
+  $("grid").replaceChildren(...itens.map(({l, foto}) => {
+    const card = el("article",{class:"card"});
+    if (foto){
+      card.append(el("img",{src:foto, alt: l.foto_sobre ? "Foto: " + l.foto_sobre : "Foto de um momento no CRJ", loading:"eager"}));
+      if (l.foto_sobre) card.append(el("p",{class:"cap", text:l.foto_sobre}));
+    }
+    card.append(el("div",{class:"txt"},
+      el("blockquote",{text:"“" + l.crj_representa + "”"}),
+      l.momento_marcante ? el("p",{class:"extra"}, el("b",{text:"Um momento marcante"}), l.momento_marcante) : null,
+      l.aprendizados ? el("p",{class:"extra"}, el("b",{text:"O que aprendi aqui"}), l.aprendizados) : null,
+      el("p",{class:"who", text: assinatura(l)})
+    ));
+    return card;
+  }));
+  if (!itens.length) $("grid").replaceChildren(el("p",{class:"sec-sub", text:"Ainda não há memórias autorizadas. Assim que os jovens enviarem e autorizarem, elas aparecem aqui."}));
+
+  $("decide-box").hidden = !decisoes.length;
+  $("decide").replaceChildren(...decisoes.map(d => el("li",null, "“" + d.texto + "”", el("small",{text:d.quem}))));
+
+  const fora = validas.length - autorizados.length;
+  $("resumo").textContent = itens.length + " memórias no mural" + (fora ? " · " + fora + " fora (sem autorização ou retiradas)" : "");
+  $("tools").hidden = false; $("mural").hidden = false;
+  $("zip").disabled = !itens.some(x => x.foto);
+  montaSlides(nums);
+}
+
+/* ---------- papel ---------- */
+$("tamanho").addEventListener("change", (e) => { $("page-size").textContent = "@page{size:" + e.target.value + ";margin:12mm}"; });
+$("imprimir").addEventListener("click", () => window.print());
+
+/* ---------- apresentação ---------- */
+function montaSlides(nums){
+  slides = [];
+  slides.push(() => el("div",{class:"slide"}, el("p",{class:"big"}, "Juventude tem ", el("span",{text:"voz"})), el("p",{class:"cap", text:"Memória Jovem do CRJ Flexal · Devolutiva do Circuito Formativo"})));
+  slides.push(() => el("div",{class:"slide"}, el("div",{class:"nums", style:"grid-template-columns:repeat(2,1fr);max-width:1100px"}, nums.map(([n,t]) => el("div",{class:"num"}, el("b",{text:String(n), style:"font-size:clamp(3rem,7vw,6rem)"}), el("span",{text:t, style:"font-size:clamp(1rem,1.6vw,1.6rem)"}))))));
+  itens.forEach(({l, foto}) => slides.push(() => {
+    const txt = el("div",null, el("blockquote",{text:"“" + l.crj_representa + "”"}), el("p",{class:"who", text:assinatura(l)}), l.foto_sobre && foto ? el("p",{class:"cap", text:l.foto_sobre}) : null);
+    return foto ? el("div",{class:"slide com-foto"}, el("img",{src:foto, alt:""}), txt) : el("div",{class:"slide"}, txt);
+  }));
+  if (decisoes.length){
+    slides.push(() => el("div",{class:"slide rosa"}, el("p",{class:"big", style:"color:var(--tinta)"}, "Se a decisão fosse ", el("span",{text:"nossa…", style:"color:var(--cobalto)"}))));
+    decisoes.forEach(d => slides.push(() => el("div",{class:"slide rosa"}, el("blockquote",{text:"“" + d.texto + "”"}), el("p",{class:"who", text:d.quem}))));
+  }
+  slides.push(() => el("div",{class:"slide"}, el("p",{class:"big"}, "Nada sobre nós, ", el("span",{text:"sem nós."})), el("p",{class:"cap", text:"Obrigado a cada jovem que deixou sua voz aqui. CRJ Flexal, outubro de 2026."})));
+}
+
+function mostra(n){
+  atual = (n + slides.length) % slides.length;
+  $("stage").replaceChildren(slides[atual]());
+  $("show-count").textContent = (atual + 1) + " de " + slides.length + (pausado ? " · pausado" : " · passa sozinho a cada 9 segundos");
+}
+function agenda(){ clearInterval(timer); if (!pausado) timer = setInterval(() => mostra(atual + 1), 9000); }
+$("apresentar").addEventListener("click", async () => {
+  $("show").hidden = false; pausado = false; $("pausa").textContent = "Pausar"; mostra(0); agenda();
+  try { await document.documentElement.requestFullscreen(); } catch (e) {}
+});
+$("prox").addEventListener("click", () => { mostra(atual + 1); agenda(); });
+$("ant").addEventListener("click", () => { mostra(atual - 1); agenda(); });
+$("pausa").addEventListener("click", () => { pausado = !pausado; $("pausa").textContent = pausado ? "Continuar" : "Pausar"; mostra(atual); agenda(); });
+function sair(){ $("show").hidden = true; clearInterval(timer); if (document.fullscreenElement) document.exitFullscreen().catch(() => {}); }
+$("sair").addEventListener("click", sair);
+document.addEventListener("keydown", (e) => {
+  if ($("show").hidden) return;
+  if (e.key === "ArrowRight" || e.key === " ") { e.preventDefault(); mostra(atual + 1); agenda(); }
+  else if (e.key === "ArrowLeft") { mostra(atual - 1); agenda(); }
+  else if (e.key === "Escape") sair();
+});
+
+/* ---------- fotos em ZIP ---------- */
+$("zip").addEventListener("click", async () => {
+  if (!window.JSZip) return;
+  const b = $("zip"); b.disabled = true; b.textContent = "Preparando fotos…";
+  try {
+    const zip = new JSZip(); let n = 0;
+    for (const {l, foto} of itens){
+      if (!foto) continue;
+      const blob = await (await fetch(foto)).blob();
+      const nome = (l.codigo + " - " + (l.autorizacao === "Sim, com meu nome" ? l.nome : "sem nome") + (l.foto_sobre ? " - " + l.foto_sobre : "")).replace(/[\\/:*?"<>|]/g, "").slice(0, 120);
+      zip.file(nome + ".jpg", blob); n++;
+    }
+    const legendas = itens.filter(x => x.foto).map(({l}) => l.codigo + "\t" + assinatura(l) + "\t" + (l.foto_sobre || "") + "\t" + l.crj_representa).join("\r\n");
+    zip.file("legendas.txt", "Código\tAssinatura\tSobre a foto\tO que o CRJ representa\r\n" + legendas);
+    const out = await zip.generateAsync({type:"blob"});
+    const a = el("a",{href:URL.createObjectURL(out), download:"juventude-tem-voz-fotos.zip"});
+    document.body.append(a); a.click(); a.remove();
+    b.textContent = n + " fotos baixadas";
+  } catch (e) {
+    b.textContent = "Não deu, tente de novo";
+  }
+  b.disabled = false;
+});
+</script>
+</body>
+</html>

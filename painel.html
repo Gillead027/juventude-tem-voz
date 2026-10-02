@@ -96,6 +96,9 @@ h2.sec{margin:0 0 12px;font-family:var(--display);font-weight:800;font-variation
 .note{margin:12px 0 0;font-size:.86rem;color:var(--tinta-suave)}
 .kv{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-top:1px solid var(--linha);font-size:.95rem}
 .kv:first-child{border-top:0}
+.toggle{display:inline-flex;align-items:center;gap:10px;font-weight:700;cursor:pointer}
+.toggle input{width:22px;height:22px;accent-color:var(--cobalto)}
+.tag-off{display:inline-block;padding:2px 10px;border-radius:999px;background:var(--rosa);font-weight:700;font-size:.85rem}
 @media (max-width:560px){ .bar .who span{display:none} .brand{font-size:1.25rem} }
 </style>
 </head>
@@ -142,6 +145,7 @@ h2.sec{margin:0 0 12px;font-family:var(--display);font-weight:800;font-variation
         </select>
         <button class="btn line" id="atualizar" type="button">Atualizar</button>
         <button class="btn" id="exportar" type="button">Exportar planilha (CSV)</button>
+        <a class="btn" id="mural" href="/mural" target="_blank" rel="noopener">Gerar mural</a>
       </div>
       <p class="upd" id="upd"></p>
       <div class="list" id="lista"></div>
@@ -307,6 +311,20 @@ function preencheDetalhe(det, l){
     const holder = el("div",{class:"photo"}, el("span",{text:"Carregando foto…"}));
     dl.append(el("dt",{text:"Foto" + (l.foto_sobre ? ": " + l.foto_sobre : "")}), el("dd",null,holder));
     mostraFoto(l, holder);
+  }
+  if (!(l.autorizacao || "").startsWith("Sim")){
+    dl.append(el("dt",{text:"Mural"}), el("dd",null, el("span",{class:"tag-off", text:"Não autorizou: fica fora do mural"})));
+  } else if (l.no_mural !== undefined){
+    const cb = el("input",{type:"checkbox"}); cb.checked = l.no_mural !== false;
+    const st = el("span",{text:""});
+    cb.addEventListener("change", async () => {
+      cb.disabled = true;
+      const { error } = await sb.from("respostas").update({ no_mural: cb.checked }).eq("numero", l.numero);
+      cb.disabled = false;
+      if (error){ cb.checked = !cb.checked; st.textContent = " Não salvou, tente de novo"; return; }
+      l.no_mural = cb.checked; st.textContent = cb.checked ? " Vai pro mural" : " Fora do mural";
+    });
+    dl.append(el("dt",{text:"Mural"}), el("dd",null, el("label",{class:"toggle"}, cb, "Aparece no mural", st)));
   }
   const obs = el("input",{class:"field", type:"text", value: l.observacao || "", placeholder:"Observação da equipe", "aria-label":"Observação"});
   const salvar = el("button",{class:"btn line small", type:"button", text:"Salvar", onclick: async () => {

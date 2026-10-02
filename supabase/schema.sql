@@ -148,3 +148,8 @@ drop policy if exists "equipe ve fotos" on storage.objects;
 create policy "equipe ve fotos" on storage.objects
   for select to authenticated
   using (bucket_id = 'memoria-fotos');
+
+-- ---------- mural (atualização de outubro) ----------
+-- A equipe pode tirar uma resposta do mural sem apagar nada.
+alter table public.respostas add column if not exists no_mural boolean not null default true;
+grant update (no_mural) on public.respostas to authenticated;
