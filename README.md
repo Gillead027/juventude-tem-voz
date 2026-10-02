@@ -12,3 +12,9 @@ As perguntas ficam em `index.html`, na lista `PERGUNTAS`. Se mudar qual é a res
 
 ## Equipe no painel
 No Supabase: Authentication > Sign In / Providers: desligue "Allow new users to sign up". Depois, em Authentication > Users, use "Add user" para cada educador (e-mail e senha).
+
+## Endereços
+- Site dos jovens: https://juventude-tem-voz.vercel.app
+- Painel da equipe: https://juventude-tem-voz.vercel.app/painel
+
+Cada envio para a pasta `main` deste repositório publica o site automaticamente na Vercel.
