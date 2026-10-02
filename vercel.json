@@ -63,7 +63,7 @@
   "rewrites": [
     {
       "source": "/telao",
-      "destination": "/totem.html"
+      "destination": "/totem"
     }
   ]
 }
