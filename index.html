@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Juventude Tem Voz</title>
+<meta name="description" content="Quiz do Circuito Formativo Nada sobre nós, sem nós. Oito perguntas sobre participação das juventudes, Memória Jovem do CRJ e brinde. CRJ Flexal, outubro de 2026.">
+<meta name="theme-color" content="#2230C9">
+<meta property="og:title" content="Juventude Tem Voz">
+<meta property="og:description" content="Oito perguntas sobre participação das juventudes e a Memória Jovem do CRJ. CRJ Flexal.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%232230C9'/%3E%3Crect x='13' y='26' width='6' height='12' rx='3' fill='%23FFD23F'/%3E%3Crect x='23' y='16' width='6' height='32' rx='3' fill='%23FFD23F'/%3E%3Crect x='33' y='22' width='6' height='20' rx='3' fill='%23FF7AB8'/%3E%3Crect x='43' y='12' width='6' height='40' rx='3' fill='%23FFD23F'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cobalto:#2230C9;
+  --cobalto-fundo:#1A25A3;
+  --sol:#FFD23F;
+  --rosa:#FF7AB8;
+  --mangue:#34D399;
+  --papel:#F7F8FF;
+  --tinta:#10164D;
+  --tinta-suave:#4A5190;
+  --nevoa:rgba(247,248,255,.72);
+  --display:"Bricolage Grotesque", "Arial Narrow", system-ui, sans-serif;
+  --body:"Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{background:var(--cobalto)}
+html,body{margin:0;padding:0}
+body{
+  min-height:100svh;
+  background:var(--cobalto);
+  color:var(--papel);
+  font-family:var(--body);
+  font-size:17px;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+[hidden]{display:none!important}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--sol);outline-offset:3px;border-radius:12px}
+
+.wrap{max-width:600px;margin:0 auto;padding:max(28px, env(safe-area-inset-top)) 20px max(36px, env(safe-area-inset-bottom));min-height:100svh;display:flex;flex-direction:column}
+.screen{display:none;flex:1;flex-direction:column}
+.screen.on{display:flex}
+
+/* ---------- botões ---------- */
+.btn{
+  cursor:pointer;display:inline-flex;align-items:center;justify-content:center;
+  min-height:58px;padding:0 30px;border-radius:999px;border:0;
+  background:var(--sol);color:var(--tinta);
+  font-family:var(--display);font-weight:800;font-size:1.15rem;font-variation-settings:"wdth" 90;
+  text-decoration:none;
+  box-shadow:0 5px 0 var(--tinta);
+  transition:transform .12s ease, box-shadow .12s ease;
+}
+.btn:hover{transform:translateY(-2px);box-shadow:0 7px 0 var(--tinta)}
+.btn:active{transform:translateY(4px);box-shadow:0 1px 0 var(--tinta)}
+.btn.ghost{background:transparent;color:var(--papel);box-shadow:inset 0 0 0 2px var(--nevoa)}
+.btn.ghost:hover{box-shadow:inset 0 0 0 2px var(--papel);transform:none}
+
+/* ---------- abertura ---------- */
+.intro{justify-content:center}
+.kicker{margin:0 0 22px;font-size:1rem;color:var(--nevoa);line-height:1.35}
+.kicker b{color:var(--papel)}
+.title{
+  margin:0 0 6px;
+  font-family:var(--display);font-weight:800;
+  font-variation-settings:"wdth" 75, "opsz" 96;
+  font-size:clamp(3.4rem, 16vw, 8rem);
+  line-height:.82;letter-spacing:-.035em;
+  color:var(--papel);
+}
+.title .voz{display:block;color:var(--sol)}
+.wave{display:flex;align-items:center;gap:5px;height:96px;margin:18px 0 26px}
+.wave i{flex:1;max-width:10px;border-radius:6px;background:var(--sol);height:var(--h);transform-origin:center;animation:fala 1.4s ease-in-out var(--d) infinite alternate}
+.wave i:nth-child(5n+2){background:var(--rosa)}
+.wave i:nth-child(7n+4){background:var(--mangue)}
+@keyframes fala{0%{transform:scaleY(.25)}100%{transform:scaleY(1)}}
+.lede{font-size:1.12rem;max-width:36ch;margin:0 0 32px}
+.lede span{color:var(--nevoa)}
+.meta{margin:14px 0 0;font-size:.95rem;color:var(--nevoa)}
+
+/* ---------- perguntas ---------- */
+.topbar{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:28px}
+.count{font-size:.95rem;color:var(--nevoa)}
+.meter{display:flex;align-items:center;gap:6px;height:44px}
+.meter i{width:9px;height:9px;border-radius:5px;background:transparent;box-shadow:inset 0 0 0 2px rgba(247,248,255,.35);transition:height .45s cubic-bezier(.3,1.6,.5,1), background .2s ease}
+.meter i.now{box-shadow:inset 0 0 0 2px var(--papel)}
+.meter i.ok{height:44px;background:var(--sol);box-shadow:none}
+.meter i.miss{height:22px;background:var(--rosa);box-shadow:none}
+
+.q{font-family:var(--display);font-weight:700;font-variation-settings:"wdth" 85, "opsz" 48;font-size:clamp(1.65rem,6.6vw,2.3rem);line-height:1.08;letter-spacing:-.015em;margin:0 0 24px;text-wrap:balance}
+.q.enter{animation:sobe .35s ease both}
+@keyframes sobe{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* cédula */
+.ballot{margin:0;padding:8px;list-style:none;background:var(--papel);border-radius:20px;color:var(--tinta);box-shadow:0 6px 0 var(--cobalto-fundo)}
+.ballot li + li{border-top:2px dashed rgba(16,22,77,.14)}
+.opt{
+  width:100%;cursor:pointer;text-align:left;
+  display:flex;align-items:center;gap:14px;
+  min-height:62px;padding:12px 12px;border:0;border-radius:14px;background:transparent;color:var(--tinta);
+  font-size:1.04rem;line-height:1.3;
+  transition:background .15s ease;
+}
+.opt:hover:not([disabled]){background:rgba(34,48,201,.07)}
+.opt .box{flex:none;width:32px;height:32px;border-radius:8px;border:2.5px solid var(--tinta);display:grid;place-items:center;background:#fff}
+.opt .box svg{grid-area:1/1;width:20px;height:20px;opacity:0;transform:scale(.4) rotate(-12deg);transition:all .22s cubic-bezier(.3,1.6,.5,1)}
+.opt[disabled]{cursor:default}
+.answered .opt:not(.right):not(.wrong){opacity:.45}
+.opt.right{background:var(--mangue)}
+.opt.wrong{background:var(--rosa)}
+.opt.right .box svg.ck, .opt.wrong .box svg.x{opacity:1;transform:none}
+
+/* balão de fala */
+.feedback{display:grid;grid-template-rows:0fr;transition:grid-template-rows .45s cubic-bezier(.2,.7,.2,1)}
+.feedback.open{grid-template-rows:1fr}
+.feedback > div{overflow:hidden}
+.bubble{position:relative;margin:30px 0 4px;padding:18px 20px 18px;border-radius:20px 20px 20px 6px;background:var(--sol);color:var(--tinta)}
+.bubble.miss{background:var(--papel)}
+.fb-head{margin:0 0 6px;font-family:var(--display);font-weight:800;font-variation-settings:"wdth" 85;font-size:1.4rem;line-height:1.1}
+.fb-text{margin:0 0 10px;max-width:58ch}
+.fb-src{margin:0;font-size:.86rem;color:var(--tinta-suave)}
+.next-row{margin-top:26px;display:none}
+.next-row.show{display:block}
+
+/* ---------- final ---------- */
+.result h2{margin:0 0 10px;font-family:var(--display);font-weight:800;font-variation-settings:"wdth" 80, "opsz" 96;font-size:clamp(2.6rem,12vw,4rem);line-height:.95;letter-spacing:-.025em}
+.result .after{font-size:1.08rem;color:var(--nevoa);max-width:40ch;margin:0 0 20px}
+.result .meter{height:88px;gap:9px;margin:0 0 40px}
+.result .meter i{width:16px;border-radius:8px}
+.result .meter i.ok{height:88px}
+.result .meter i.miss{height:40px}
+
+.step{margin:0 0 18px;padding:24px 20px;border-radius:22px;background:var(--papel);color:var(--tinta)}
+.step .n{display:inline-grid;place-items:center;width:34px;height:34px;margin:0 0 12px;border-radius:50%;background:var(--cobalto);color:var(--sol);font-family:var(--display);font-weight:800}
+.step h3{margin:0 0 6px;font-family:var(--display);font-weight:800;font-variation-settings:"wdth" 85;font-size:1.65rem;line-height:1.05;letter-spacing:-.01em}
+.step > p{margin:0 0 18px;color:var(--tinta-suave);max-width:44ch}
+.step > .small{font-size:.9rem;margin:14px 0 0}
+.step .btn{box-shadow:0 5px 0 var(--cobalto)}
+.step .btn:hover{box-shadow:0 7px 0 var(--cobalto)}
+.step .btn:active{box-shadow:0 1px 0 var(--cobalto)}
+.field{display:block;width:100%;min-height:56px;margin:0 0 16px;padding:0 16px;border-radius:14px;border:2.5px solid var(--tinta);background:#fff;color:var(--tinta);font:inherit;font-size:1.08rem}
+.field::placeholder{color:#8A90BD}
+.field:focus{outline:none;border-color:var(--cobalto);box-shadow:0 0 0 4px rgba(34,48,201,.18)}
+
+.ticket{display:none;position:relative;margin:22px 0 0;padding:24px 20px 22px;border-radius:18px;background:var(--cobalto);color:var(--papel);text-align:center;overflow:hidden}
+.ticket.show{display:block;animation:sobe .4s ease both}
+.ticket::before,.ticket::after{content:"";position:absolute;top:50%;width:22px;height:22px;margin-top:-11px;border-radius:50%;background:var(--papel)}
+.ticket::before{left:-11px}.ticket::after{right:-11px}
+.tk-name{margin:0 0 4px;font-family:var(--display);font-weight:800;font-variation-settings:"wdth" 80;font-size:clamp(1.9rem,8vw,2.5rem);line-height:1;letter-spacing:-.02em;color:var(--sol);word-break:break-word}
+.tk-score{margin:0 0 16px}
+.tk-code{display:inline-block;margin:0 0 14px;padding:6px 16px;border:2.5px solid var(--sol);border-radius:10px;color:var(--sol);font-family:var(--display);font-weight:800;font-size:1.3rem;letter-spacing:.08em;transform:rotate(-4deg)}
+.tk-time{margin:0 0 6px;font-size:.9rem;color:var(--nevoa)}
+.tk-say{margin:0;font-weight:700}
+
+.when{margin:46px 0 22px}
+.when p{margin:0}
+.when .d{font-family:var(--display);font-weight:800;font-variation-settings:"wdth" 85;font-size:1.8rem;line-height:1.1;color:var(--sol)}
+.when .p{color:var(--nevoa)}
+.circuit{list-style:none;margin:0 0 8px;padding:0}
+.circuit li{display:grid;grid-template-columns:76px 1fr;gap:4px 14px;padding:16px 0;border-top:2px solid rgba(247,248,255,.16)}
+.circuit .mes{font-family:var(--display);font-weight:700;font-variation-settings:"wdth" 80;font-size:1.05rem;color:var(--sol);padding-top:2px}
+.circuit h3{margin:0 0 2px;font-size:1.05rem}
+.circuit p{margin:0;color:var(--nevoa);font-size:.98rem;grid-column:2}
+
+.provoke{margin:30px 0 40px;padding:26px 22px;border-radius:24px 24px 24px 6px;background:var(--rosa);color:var(--tinta)}
+.provoke blockquote{margin:0 0 8px;font-family:var(--display);font-weight:800;font-variation-settings:"wdth" 80, "opsz" 72;font-size:clamp(1.9rem,8vw,2.6rem);line-height:1;letter-spacing:-.02em;text-wrap:balance}
+.provoke p{margin:0}
+
+.foot{margin-top:auto;padding-top:32px;font-size:.88rem;color:var(--nevoa);line-height:1.5}
+
+@media (min-width:760px){ .wrap{padding-left:32px;padding-right:32px} }
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+
+/* ---------- formulário ---------- */
+.preview-note{margin:0 0 22px;padding:12px 16px;border-radius:14px;background:rgba(247,248,255,.12);font-size:.92rem;color:var(--papel)}
+.form-head h2{margin:0 0 8px;font-family:var(--display);font-weight:800;font-variation-settings:"wdth" 80, "opsz" 96;font-size:clamp(2.3rem,10vw,3.4rem);line-height:.95;letter-spacing:-.025em}
+.form-head p{margin:0 0 26px;color:var(--nevoa);max-width:40ch}
+.card{margin:0 0 18px;padding:24px 20px;border-radius:22px;background:var(--papel);color:var(--tinta)}
+.card h3{margin:0 0 4px;font-family:var(--display);font-weight:800;font-variation-settings:"wdth" 85;font-size:1.6rem;line-height:1.05;letter-spacing:-.01em}
+.card > p.sub{margin:0 0 18px;color:var(--tinta-suave)}
+.q-field{margin:0 0 22px;padding:0;border:0;min-width:0}
+.q-field:last-child{margin-bottom:0}
+.q-field legend,.q-field > label.lbl{display:block;margin:0 0 10px;padding:0;font-weight:700;font-size:1.02rem;line-height:1.3}
+.q-field .hint{font-weight:400;color:var(--tinta-suave)}
+.q-field.err legend,.q-field.err > label.lbl{color:#C2185B}
+.q-field.err .field{border-color:#E0457B}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{position:relative;display:inline-flex}
+.chip input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.chip span{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border-radius:999px;border:2.5px solid var(--tinta);background:#fff;font-size:.98rem;line-height:1.2;transition:background .12s ease}
+.chip input:checked + span{background:var(--sol)}
+.chip input:focus-visible + span{outline:3px solid var(--cobalto);outline-offset:2px}
+.scale{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.scale .chip span{justify-content:center;width:100%;padding:0;font-family:var(--display);font-weight:800;font-size:1.15rem}
+.scale-ends{display:flex;justify-content:space-between;margin:6px 2px 0;font-size:.84rem;color:var(--tinta-suave)}
+textarea.field{min-height:110px;padding:14px 16px;line-height:1.45;resize:vertical}
+.field{margin-bottom:0}
+.photo-drop{display:flex;align-items:center;justify-content:center;gap:10px;min-height:64px;padding:12px 16px;border-radius:14px;border:2.5px dashed var(--tinta);background:#fff;cursor:pointer;font-weight:700;text-align:center}
+.photo-drop input{position:absolute;width:1px;height:1px;opacity:0}
+.photo-drop:focus-within{outline:3px solid var(--cobalto);outline-offset:2px}
+.photo-prev{display:none;margin:12px 0 0;align-items:center;gap:12px}
+.photo-prev.show{display:flex}
+.photo-prev img{width:84px;height:84px;object-fit:cover;border-radius:12px;border:2.5px solid var(--tinta)}
+.photo-prev button{border:0;background:none;color:var(--cobalto);font-weight:700;cursor:pointer;text-decoration:underline;padding:8px 0}
+.photo-more{margin-top:14px}
+.form-err{display:none;margin:0 0 16px;padding:14px 16px;border-radius:14px;background:var(--rosa);color:var(--tinta);font-weight:700}
+.form-err.show{display:block}
+.send-row{margin:6px 0 0}
+.btn[disabled]{opacity:.6;cursor:wait;transform:none}
+
+/* ---------- comprovante ---------- */
+.ok-head h2{margin:0 0 10px;font-family:var(--display);font-weight:800;font-variation-settings:"wdth" 80, "opsz" 96;font-size:clamp(2.4rem,11vw,3.6rem);line-height:.95;letter-spacing:-.025em}
+.ok-head p{margin:0 0 22px;color:var(--nevoa);max-width:40ch}
+.ticket.show{display:block}
+.ticket{margin:0}
+#s-ok .ticket{background:var(--papel);color:var(--tinta)}
+#s-ok .ticket::before,#s-ok .ticket::after{background:var(--cobalto)}
+#s-ok .tk-name{color:var(--cobalto)}
+#s-ok .tk-code{border-color:var(--cobalto);color:var(--cobalto)}
+#s-ok .tk-time{color:var(--tinta-suave)}
+#s-ok .tk-say{display:inline-block;margin-top:4px;padding:8px 16px;border-radius:999px;background:var(--mangue)}
+</style>
+</head>
+<body>
+<main class="wrap">
+
+  <!-- ABERTURA -->
+  <section class="screen intro on" id="s-intro" aria-labelledby="t-intro">
+    <p class="kicker"><b>CRJ Flexal</b><br>Circuito Formativo: Nada sobre nós, sem nós</p>
+    <h1 class="title" id="t-intro">Juventude tem <span class="voz">voz</span></h1>
+    <div class="wave" id="wave" aria-hidden="true"></div>
+    <p class="lede">Agosto e setembro foram de muita troca. <span>Agora são oito perguntas sobre participação, território e o que a gente construiu junto. Depois, você deixa sua marca na Memória Jovem do CRJ e ganha um brinde.</span></p>
+    <div>
+      <button class="btn" id="start" type="button">Começar</button>
+      <p class="meta">Leva uns 5 a 10 minutos.</p>
+    </div>
+  </section>
+
+  <!-- PERGUNTAS -->
+  <section class="screen" id="s-quiz" aria-live="polite">
+    <div class="topbar">
+      <span class="count" id="count">Pergunta 1 de 8</span>
+      <div class="meter" id="meter" aria-hidden="true"></div>
+    </div>
+    <h2 class="q" id="q"></h2>
+    <ul class="ballot" id="options"></ul>
+    <div class="feedback" id="feedback"><div>
+      <div class="bubble" id="bubble">
+        <p class="fb-head" id="fb-head"></p>
+        <p class="fb-text" id="fb-text"></p>
+        <p class="fb-src" id="fb-src"></p>
+      </div>
+    </div></div>
+    <div class="next-row" id="next-row"><button class="btn" id="next" type="button">Próxima pergunta</button></div>
+  </section>
+
+  <!-- RESULTADO -->
+  <section class="screen result" id="s-end" aria-labelledby="t-end">
+    <h2 id="t-end">Você acertou<br><span id="final-score">0 de 8</span></h2>
+    <p class="after" id="final-msg"></p>
+    <div class="meter" id="meter-end" aria-hidden="true"></div>
+    <div class="step">
+      <h3>Agora é a sua vez de falar</h3>
+      <p>Falta pouco pro brinde: conta quem você é, como você vê sua participação e deixa sua história na Memória Jovem do CRJ.</p>
+      <button class="btn" id="to-form" type="button">Continuar</button>
+    </div>
+  </section>
+
+  <!-- FORMULÁRIO -->
+  <section class="screen" id="s-form" aria-labelledby="t-form">
+    <p class="preview-note" id="preview-note" hidden>Prévia: nesta versão nada é salvo. A versão do QR Code grava tudo no banco do CRJ.</p>
+    <div class="form-head">
+      <h2 id="t-form">Sua voz no circuito</h2>
+      <p>Os campos marcados com * são obrigatórios. O resto você responde se quiser.</p>
+    </div>
+
+    <form id="form" novalidate>
+      <div class="card">
+        <h3>Quem é você</h3>
+        <p class="sub">Pra gente saber quem participou.</p>
+
+        <div class="q-field" data-req="nome">
+          <label class="lbl" for="nome">Nome completo *</label>
+          <input class="field" id="nome" name="nome" type="text" autocomplete="name" maxlength="80">
+        </div>
+
+        <fieldset class="q-field" data-req="oficinas">
+          <legend>Qual oficina ou grupo você frequenta? * <span class="hint">Pode marcar mais de um.</span></legend>
+          <div class="chips" id="oficinas"></div>
+        </fieldset>
+
+        <fieldset class="q-field" data-req="atividades">
+          <legend>De quais encontros do circuito você participou? *</legend>
+          <div class="chips" id="atividades"></div>
+        </fieldset>
+      </div>
+
+      <div class="card">
+        <h3>Sua participação</h3>
+        <p class="sub">Não tem certo nem errado aqui.</p>
+
+        <fieldset class="q-field">
+          <legend>“Eu sinto que minha opinião é ouvida no CRJ.”</legend>
+          <div class="scale" id="escala1"></div>
+          <div class="scale-ends"><span>Discordo totalmente</span><span>Concordo totalmente</span></div>
+        </fieldset>
+
+        <fieldset class="q-field">
+          <legend>“Eu sinto que posso participar das decisões sobre o meu território.”</legend>
+          <div class="scale" id="escala2"></div>
+          <div class="scale-ends"><span>Discordo totalmente</span><span>Concordo totalmente</span></div>
+        </fieldset>
+
+        <fieldset class="q-field">
+          <legend>Qual atividade do circuito mais marcou você?</legend>
+          <div class="chips" id="marcou"></div>
+        </fieldset>
+
+        <div class="q-field">
+          <label class="lbl" for="decisao">Se a decisão fosse sua, o que você mudaria no CRJ ou em Flexal?</label>
+          <textarea class="field" id="decisao" maxlength="600"></textarea>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Memória Jovem do CRJ</h3>
+        <p class="sub">Aqui é o seu espaço. Pode ser curtinho.</p>
+
+        <div class="q-field" data-req="representa">
+          <label class="lbl" for="representa">O que o CRJ representa pra você e por que ele é importante pra Flexal? *</label>
+          <textarea class="field" id="representa" maxlength="1200"></textarea>
+        </div>
+
+        <div class="q-field">
+          <label class="lbl" for="aprendeu">O que você aprendeu aqui? Tem alguém da equipe que marcou sua trajetória?</label>
+          <textarea class="field" id="aprendeu" maxlength="1200"></textarea>
+        </div>
+
+        <div class="q-field">
+          <label class="lbl" for="momento">Qual foi um momento marcante que você viveu no CRJ?</label>
+          <textarea class="field" id="momento" maxlength="1200"></textarea>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Uma foto, se quiser</h3>
+        <p class="sub">Um momento importante que você viveu no CRJ. Ela vai pra memória visual do ciclo.</p>
+
+        <div class="q-field">
+          <label class="photo-drop" id="photo-drop">
+            <input type="file" id="foto" accept="image/*">
+            <span id="photo-label">Escolher foto</span>
+          </label>
+          <div class="photo-prev" id="photo-prev">
+            <img id="photo-img" alt="Foto escolhida">
+            <button type="button" id="photo-remove">Remover foto</button>
+          </div>
+          <div class="photo-more" id="photo-more" hidden>
+            <label class="lbl" for="foto-sobre" style="display:block;margin:0 0 10px;font-weight:700">Em uma frase, que momento foi esse?</label>
+            <input class="field" id="foto-sobre" type="text" maxlength="200">
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Autorização</h3>
+        <p class="sub">O que você escreveu e a sua foto podem aparecer na devolutiva do dia 28.</p>
+        <fieldset class="q-field" data-req="autorizacao">
+          <legend>Podemos usar seu relato e sua foto na devolutiva do circuito (mural, vídeo, exposição, redes ou relatório)? *</legend>
+          <div class="chips" id="autorizacao"></div>
+        </fieldset>
+      </div>
+
+      <p class="form-err" id="form-err" role="alert"></p>
+      <div class="send-row"><button class="btn" id="send" type="submit">Enviar e gerar comprovante</button></div>
+    </form>
+  </section>
+
+  <!-- COMPROVANTE -->
+  <section class="screen" id="s-ok" aria-labelledby="t-ok">
+    <div class="ok-head">
+      <h2 id="t-ok">Sua voz foi registrada</h2>
+      <p>Mostre esta tela pro educador e retire seu saquinho de brinde.</p>
+    </div>
+    <div class="ticket show" id="ticket" aria-live="polite">
+      <p class="tk-name" id="tk-name"></p>
+      <p class="tk-score" id="tk-score"></p>
+      <span class="tk-code" id="tk-code"></span>
+      <p class="tk-time" id="tk-time"></p>
+      <p class="tk-say">Brinde liberado</p>
+    </div>
+
+    <div class="when">
+      <p class="d">Quarta, 28 de outubro, às 15h</p>
+      <p class="p">No CRJ Flexal. A devolutiva do circuito, com as memórias de vocês.</p>
+    </div>
+
+    <ol class="circuit">
+      <li><span class="mes">Agosto</span><h3>Se a decisão fosse nossa?</h3>
+        <p>Flexal no Google Maps, projetado na parede, e ideias de melhoria criadas em grupo.</p></li>
+      <li><span class="mes">Setembro</span><h3>Nada sobre nós, sem nós</h3>
+        <p>A continuação do documentário no LAB Estúdio, com a voz das juventudes de hoje.</p></li>
+      <li><span class="mes">Outubro</span><h3>Juventude Tem Voz</h3>
+        <p>Este quiz e a Memória Jovem do CRJ. O que vocês deixaram aqui vira mural, vídeo ou exposição.</p></li>
+    </ol>
+
+    <div class="provoke">
+      <blockquote>Se a decisão fosse sua, o que você mudaria?</blockquote>
+      <p>Guarda essa pergunta com você. No dia 28, ela volta.</p>
+    </div>
+
+    <div><button class="btn ghost" id="again" type="button">Começar com outra pessoa</button></div>
+
+    <p class="foot">CRJ Flexal, Centro de Referência da Juventude<br>Circuito Formativo em Direitos Humanos, outubro de 2026</p>
+  </section>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="config.js"></script>
+<script>
+/* ============ PERGUNTAS ============
+   Para trocar/editar: mude o texto aqui.
+   "certa" é a posição da resposta correta (0 = primeira).
+   Se mudar a resposta certa, mude também o gabarito em supabase/schema.sql. */
+const PERGUNTAS = [
+  {
+    p: "O tema do circuito foi “Nada sobre nós, sem nós”. O que isso quer dizer?",
+    o: ["Que jovem não deve se meter em política", "Que as decisões sobre a juventude devem ser tomadas com a juventude", "Que os adultos sabem o que é melhor pros jovens", "Que só quem tem mais de 18 anos pode opinar"],
+    certa: 1,
+    ctx: "O circuito chamou vocês a pensar na própria presença, na própria voz e na participação nas decisões que envolvem o CRJ, o território e os espaços que fazem parte da vida de vocês. Se é sobre a juventude, a juventude tem que estar na mesa.",
+    fonte: "Circuito Formativo em Direitos Humanos, CRJ Flexal, 2026"
+  },
+  {
+    p: "Participação social e política acontece:",
+    o: ["Só no dia da eleição, na hora de votar", "Só na Câmara e na Assembleia", "Também no dia a dia, quando a gente opina, propõe, avalia e decide junto", "Só quando tem protesto na rua"],
+    certa: 2,
+    ctx: "Votar é importante, mas participar não para aí. Acontece no cotidiano, sempre que a juventude dá opinião, propõe, avalia e constrói decisões coletivas. No CRJ, no bairro, na escola.",
+    fonte: "Circuito Formativo em Direitos Humanos, CRJ Flexal, 2026"
+  },
+  {
+    p: "Pelo Estatuto da Juventude, participar das decisões e das políticas públicas de juventude é:",
+    o: ["Um favor que o governo faz", "Um direito de todo jovem, escrito em lei", "Coisa só pra quem é líder", "Permitido só depois dos 21 anos"],
+    certa: 1,
+    ctx: "A lei diz que o jovem tem direito à participação social e política e de ajudar a formular, executar e avaliar as políticas públicas de juventude. Ou seja: dar opinião sobre o que é feito pra você não é favor, é direito.",
+    fonte: "Estatuto da Juventude, Lei nº 12.852/2013, art. 4º"
+  },
+  {
+    p: "Em agosto, na dinâmica “Se a decisão fosse nossa?”, como a turma olhou pro território?",
+    o: ["Com uma palestra sobre política no auditório", "Com o Google Maps projetado na parede, escolhendo lugares de Flexal", "Com uma prova escrita sobre o bairro", "Com um vídeo sobre a história de outro país"],
+    certa: 1,
+    ctx: "Na sala de informática, a turma se dividiu em grupos e foi passeando por Flexal no Google Maps, projetado na parede. Diante de cada lugar, os grupos criaram ali mesmo suas ideias de melhoria pro bairro.",
+    fonte: "Dinâmica “Se a decisão fosse nossa?”, agosto de 2026"
+  },
+  {
+    p: "E como o grupo decidiu quais propostas eram mais importantes pro território?",
+    o: ["O educador escolheu sozinho", "Por sorteio", "Por uma votação entre os próprios jovens", "Ninguém decidiu"],
+    certa: 2,
+    ctx: "As prioridades saíram de uma votação simbólica do grupo. Decidir junto, ouvindo as propostas de todo mundo, é exatamente o que participação quer dizer.",
+    fonte: "Dinâmica “Se a decisão fosse nossa?”, agosto de 2026"
+  },
+  {
+    p: "Em setembro, qual documentário serviu de ponto de partida no LAB Estúdio?",
+    o: ["“A história que a história não conta – Flexal”", "“O Ódio que Você Semeia”", "Um documentário sobre o Rio de Janeiro", "Nenhum, só teve gravação"],
+    certa: 0,
+    ctx: "A atividade começou com a exibição de “A história que a história não conta – Flexal” e uma roda de conversa sobre o que o vídeo mostra e o que ainda representa o território hoje.",
+    fonte: "Continuação do documentário “Nada sobre nós, sem nós”, setembro de 2026"
+  },
+  {
+    p: "Qual é a diferença da nova parte do documentário, gravada em setembro?",
+    o: ["Ela conta só as memórias antigas do bairro", "Ela coloca no centro a voz dos jovens de hoje sobre o presente de Flexal", "Ela é uma propaganda do CRJ", "Ela é sobre outro bairro"],
+    certa: 1,
+    ctx: "O primeiro documentário traz memórias e narrativas que já existiam. A nova gravação escuta as juventudes atuais: o presente de Flexal, os desafios do dia a dia e as mudanças que vocês querem. Quando o jovem conta a história do lugar onde vive, ele deixa de ser assunto e vira autor.",
+    fonte: "Continuação do documentário “Nada sobre nós, sem nós”, setembro de 2026"
+  },
+  {
+    p: "Responder este quiz e avaliar o que rolou no circuito é:",
+    o: ["Só uma brincadeira", "Uma forma de participação", "Obrigação pra ganhar brinde", "Coisa que não muda nada"],
+    certa: 1,
+    ctx: "Avaliar também é participar. O que você responde aqui ajuda a equipe a entender o que ficou do circuito e a pensar as próximas ações do CRJ. E a sua Memória Jovem, logo a seguir, pode virar mural, vídeo ou exposição.",
+    fonte: "Quiz avaliativo “Juventude Tem Voz”, outubro de 2026"
+  }
+];
+
+/* ============ OPÇÕES DO FORMULÁRIO ============ */
+const OFICINAS = ["Percussão", "Dança", "Capoeira", "Muay Thai", "Artes", "LAB Estúdio", "La Liga", "Outra"];
+const ATIVIDADES = ["Agosto: Se a decisão fosse nossa?", "Setembro: documentário no LAB Estúdio", "Não participei de nenhum"];
+const MARCOU = ["Agosto: Se a decisão fosse nossa?", "Setembro: documentário no LAB Estúdio", "Não participei"];
+const AUTORIZA = ["Sim, com meu nome", "Sim, mas sem meu nome", "Não autorizo"];
+
+const ACERTOU = ["Isso mesmo.", "Na mosca.", "Acertou.", "É isso."];
+const ERROU = ["Não foi dessa vez.", "Quase.", "Essa pega muita gente.", "Olha só."];
+
+const $ = (id) => document.getElementById(id);
+const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+/* Supabase: a configuração vem do config.js. Sem ela, o site roda em modo prévia e não salva nada. */
+const CFG = window.JTV_CONFIG || {};
+const ONLINE = !!(CFG.supabaseUrl && CFG.supabaseAnonKey && window.supabase);
+const sb = ONLINE ? window.supabase.createClient(CFG.supabaseUrl, CFG.supabaseAnonKey, {auth:{persistSession:false, autoRefreshToken:false}}) : null;
+
+async function enviarResposta(payload, fotoDataUrl){
+  let fotoPath = null;
+  if (fotoDataUrl){
+    const blob = await (await fetch(fotoDataUrl)).blob();
+    fotoPath = (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(16).slice(2)) + ".jpg";
+    const up = await sb.storage.from("memoria-fotos").upload(fotoPath, blob, {contentType:"image/jpeg", upsert:false});
+    if (up.error) throw up.error;
+  }
+  const { data, error } = await sb.rpc("registrar_resposta", { p: Object.assign({}, payload, { foto_path: fotoPath }) });
+  if (error) throw error;
+  return data;
+}
+const CK = '<svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10.5l4 4 8-9" fill="none" stroke="#10164D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const XX = '<svg class="x" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 5l10 10M15 5L5 15" fill="none" stroke="#10164D" stroke-width="3" stroke-linecap="round"/></svg>';
+let i = 0, pontos = 0, marcas = [], escolhas = [], foto = null, enviando = false;
+
+/* onda da abertura */
+(function(){
+  const w = $("wave"); const n = 30;
+  for (let k = 0; k < n; k++){
+    const b = document.createElement("i");
+    const h = 22 + Math.round(Math.abs(Math.sin(k * 1.7) * 60 + Math.sin(k * .45) * 22));
+    b.style.setProperty("--h", Math.min(h, 96) + "px");
+    b.style.setProperty("--d", (-(k * 0.13) % 1.4).toFixed(2) + "s");
+    w.appendChild(b);
+  }
+})();
+
+/* chips e escalas */
+function chips(id, nome, opcoes, tipo){
+  const box = $(id);
+  opcoes.forEach((txt, k) => {
+    const lab = document.createElement("label"); lab.className = "chip";
+    const inp = document.createElement("input"); inp.type = tipo; inp.name = nome; inp.value = txt;
+    const sp = document.createElement("span"); sp.textContent = txt;
+    lab.append(inp, sp); box.appendChild(lab);
+  });
+}
+chips("oficinas", "oficinas", OFICINAS, "checkbox");
+chips("atividades", "atividades", ATIVIDADES, "checkbox");
+chips("marcou", "marcou", MARCOU, "radio");
+chips("autorizacao", "autorizacao", AUTORIZA, "radio");
+chips("escala1", "escala1", ["1","2","3","4","5"], "radio");
+chips("escala2", "escala2", ["1","2","3","4","5"], "radio");
+
+/* "não participei de nenhum" desmarca os outros, e vice-versa */
+$("atividades").addEventListener("change", (e) => {
+  const todos = [...document.querySelectorAll('input[name="atividades"]')];
+  const nenhum = todos[todos.length - 1];
+  if (e.target === nenhum && nenhum.checked) todos.slice(0, -1).forEach(c => c.checked = false);
+  else if (e.target !== nenhum && e.target.checked) nenhum.checked = false;
+});
+
+const marcados = (nome) => [...document.querySelectorAll(`input[name="${nome}"]:checked`)].map(c => c.value);
+const um = (nome) => marcados(nome)[0] || "";
+
+/* ============ QUIZ ============ */
+function desenhaMedidor(el, atual){
+  el.innerHTML = "";
+  PERGUNTAS.forEach((_, k) => {
+    const b = document.createElement("i");
+    if (marcas[k] === true) b.className = "ok";
+    else if (marcas[k] === false) b.className = "miss";
+    else if (k === atual) b.className = "now";
+    el.appendChild(b);
+  });
+}
+
+function show(id){
+  document.querySelectorAll(".screen").forEach(s => s.classList.remove("on"));
+  $(id).classList.add("on");
+  window.scrollTo({top:0});
+}
+
+function render(){
+  const item = PERGUNTAS[i];
+  const total = PERGUNTAS.length;
+  $("count").textContent = `Pergunta ${i+1} de ${total}`;
+  desenhaMedidor($("meter"), i);
+  const q = $("q"); q.textContent = item.p; q.classList.remove("enter"); void q.offsetWidth; q.classList.add("enter");
+  const ul = $("options");
+  ul.classList.remove("answered");
+  ul.innerHTML = "";
+  item.o.forEach((txt, k) => {
+    const li = document.createElement("li");
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "opt";
+    b.innerHTML = `<span class="box">${CK}${XX}</span><span></span>`;
+    b.lastChild.textContent = txt;
+    b.addEventListener("click", () => answer(k));
+    li.appendChild(b); ul.appendChild(li);
+  });
+  $("feedback").classList.remove("open");
+  $("next-row").classList.remove("show");
+  $("next").textContent = i === total - 1 ? "Ver meu resultado" : "Próxima pergunta";
+}
+
+function answer(k){
+  const item = PERGUNTAS[i];
+  const btns = [...document.querySelectorAll(".opt")];
+  btns.forEach(b => b.disabled = true);
+  $("options").classList.add("answered");
+  btns[item.certa].classList.add("right");
+  const ok = k === item.certa;
+  if (ok) pontos++; else btns[k].classList.add("wrong");
+  marcas[i] = ok; escolhas[i] = k;
+  desenhaMedidor($("meter"), -1);
+  $("fb-head").textContent = ok ? ACERTOU[i % ACERTOU.length] : ERROU[i % ERROU.length] + " A certa está marcada em verde.";
+  $("bubble").classList.toggle("miss", !ok);
+  $("fb-text").textContent = item.ctx;
+  $("fb-src").textContent = "Fonte: " + item.fonte;
+  $("feedback").classList.add("open");
+  $("next-row").classList.add("show");
+  setTimeout(() => {
+    const r = $("next-row").getBoundingClientRect();
+    if (r.bottom > window.innerHeight) $("next-row").scrollIntoView({behavior: reduce ? "auto" : "smooth", block:"end"});
+  }, 380);
+  $("next").focus({preventScroll:true});
+}
+
+function finish(){
+  const total = PERGUNTAS.length;
+  $("final-score").textContent = `${pontos} de ${total}`;
+  let msg;
+  if (pontos === total) msg = "Você absorveu o circuito inteiro. Essa é a sua onda.";
+  else if (pontos >= total - 2) msg = "Mandou bem. E o que ficou de fora agora você já sabe, então conta pra alguém.";
+  else if (pontos >= total / 2) msg = "Metade do caminho. O resto a gente conversa na devolutiva do dia 28.";
+  else msg = "Placar baixo não tem problema nenhum. Se você não estava nos encontros, agora já sabe o que rolou. E sua voz conta do mesmo jeito.";
+  $("final-msg").textContent = msg;
+  desenhaMedidor($("meter-end"), -1);
+  show("s-end");
+}
+
+/* ============ FOTO ============ */
+function reduzFoto(arquivo){
+  return new Promise((ok, falha) => {
+    const url = URL.createObjectURL(arquivo);
+    const img = new Image();
+    img.onload = () => {
+      const max = 1600;
+      const esc = Math.min(1, max / Math.max(img.width, img.height));
+      const c = document.createElement("canvas");
+      c.width = Math.round(img.width * esc); c.height = Math.round(img.height * esc);
+      c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+      URL.revokeObjectURL(url);
+      ok(c.toDataURL("image/jpeg", 0.82));
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); falha(new Error("imagem")); };
+    img.src = url;
+  });
+}
+
+$("foto").addEventListener("change", async (e) => {
+  const f = e.target.files && e.target.files[0];
+  if (!f) return;
+  $("photo-label").textContent = "Preparando a foto…";
+  try {
+    foto = await reduzFoto(f);
+    $("photo-img").src = foto;
+    $("photo-prev").classList.add("show");
+    $("photo-more").hidden = false;
+    $("photo-label").textContent = "Trocar foto";
+  } catch (err) {
+    foto = null;
+    $("photo-label").textContent = "Não deu pra abrir essa imagem. Tenta outra foto.";
+  }
+});
+$("photo-remove").addEventListener("click", () => {
+  foto = null; $("foto").value = "";
+  $("photo-prev").classList.remove("show");
+  $("photo-more").hidden = true; $("foto-sobre").value = "";
+  $("photo-label").textContent = "Escolher foto";
+});
+
+/* ============ ENVIO ============ */
+function valida(){
+  const faltas = [];
+  const marca = (chave, ok, nome) => {
+    const el = document.querySelector(`[data-req="${chave}"]`);
+    el.classList.toggle("err", !ok);
+    if (!ok) faltas.push({el, nome});
+  };
+  marca("nome", $("nome").value.trim().length >= 3, "seu nome");
+  marca("oficinas", marcados("oficinas").length > 0, "sua oficina");
+  marca("atividades", marcados("atividades").length > 0, "os encontros que você participou");
+  marca("representa", $("representa").value.trim().length > 0, "o que o CRJ representa pra você");
+  marca("autorizacao", um("autorizacao") !== "", "a autorização");
+  return faltas;
+}
+
+function dados(){
+  return {
+    nome: $("nome").value.trim().replace(/\s+/g, " "),
+    oficinas: marcados("oficinas"),
+    atividades: marcados("atividades"),
+    escolhas: escolhas.slice(0, PERGUNTAS.length),
+    escala1: um("escala1"),
+    escala2: um("escala2"),
+    marcou: um("marcou"),
+    decisao: $("decisao").value.trim(),
+    representa: $("representa").value.trim(),
+    aprendeu: $("aprendeu").value.trim(),
+    momento: $("momento").value.trim(),
+    fotoSobre: $("foto-sobre").value.trim(),
+    autorizacao: um("autorizacao")
+  };
+}
+
+function mostraComprovante(r){
+  const d = r.data ? new Date(r.data) : new Date();
+  const dia = d.toLocaleDateString("pt-BR", {day:"2-digit", month:"2-digit"});
+  const hora = d.toLocaleTimeString("pt-BR", {hour:"2-digit", minute:"2-digit"});
+  $("tk-name").textContent = $("nome").value.trim().replace(/\s+/g, " ");
+  $("tk-score").textContent = `Acertou ${pontos} de ${PERGUNTAS.length} no Juventude Tem Voz`;
+  $("tk-code").textContent = r.codigo;
+  $("tk-time").textContent = `Registrado em ${dia} às ${hora}`;
+  show("s-ok");
+}
+
+function erroEnvio(){
+  enviando = false;
+  $("send").disabled = false; $("send").textContent = "Tentar enviar de novo";
+  const e = $("form-err");
+  e.textContent = "Não deu pra enviar. Confere se a internet está funcionando e toca em “Tentar enviar de novo”. Suas respostas continuam aqui.";
+  e.classList.add("show");
+}
+
+$("form").addEventListener("submit", (ev) => {
+  ev.preventDefault();
+  if (enviando) return;
+  const faltas = valida();
+  const e = $("form-err");
+  if (faltas.length){
+    e.textContent = "Falta preencher: " + faltas.map(f => f.nome).join(", ") + ".";
+    e.classList.add("show");
+    faltas[0].el.scrollIntoView({behavior: reduce ? "auto" : "smooth", block:"center"});
+    return;
+  }
+  e.classList.remove("show");
+  enviando = true;
+  $("send").disabled = true; $("send").textContent = foto ? "Enviando sua foto…" : "Enviando…";
+  const payload = dados();
+  if (ONLINE){
+    enviarResposta(payload, foto)
+      .then((r) => { enviando = false; if (r && r.codigo) mostraComprovante(r); else erroEnvio(); })
+      .catch((err) => { console.error(err); erroEnvio(); });
+  } else {
+    setTimeout(() => { enviando = false; mostraComprovante({codigo: "PRÉVIA"}); }, 600);
+  }
+});
+
+/* ============ NAVEGAÇÃO ============ */
+function zeraTudo(){
+  i = 0; pontos = 0; marcas = []; escolhas = []; foto = null; enviando = false;
+  $("form").reset();
+  document.querySelectorAll(".q-field.err").forEach(f => f.classList.remove("err"));
+  $("form-err").classList.remove("show");
+  $("photo-prev").classList.remove("show"); $("photo-more").hidden = true;
+  $("photo-label").textContent = "Escolher foto";
+  $("send").disabled = false; $("send").textContent = "Enviar e gerar comprovante";
+}
+
+$("start").addEventListener("click", () => { zeraTudo(); show("s-quiz"); render(); });
+$("next").addEventListener("click", () => { i++; if (i < PERGUNTAS.length) { render(); window.scrollTo({top:0}); } else finish(); });
+$("to-form").addEventListener("click", () => { show("s-form"); });
+$("again").addEventListener("click", () => { zeraTudo(); show("s-intro"); });
+if (!ONLINE) $("preview-note").hidden = false;
+/* revalida ao corrigir */
+["input","change"].forEach(t => $("form").addEventListener(t, () => { if (document.querySelector(".q-field.err")) { const f = valida(); if (!f.length) $("form-err").classList.remove("show"); } }));
+</script>
+</body>
+</html>

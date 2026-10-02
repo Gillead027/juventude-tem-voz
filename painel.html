@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Painel – Juventude Tem Voz</title>
+<meta name="theme-color" content="#2230C9">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cobalto:#2230C9; --sol:#FFD23F; --rosa:#FF7AB8; --mangue:#34D399;
+  --papel:#F7F8FF; --branco:#FFFFFF; --tinta:#10164D; --tinta-suave:#4A5190; --linha:#DDE0F5;
+  --display:"Bricolage Grotesque","Arial Narrow",system-ui,sans-serif;
+  --body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--papel);color:var(--tinta);font-family:var(--body);font-size:16px;line-height:1.45;-webkit-font-smoothing:antialiased}
+[hidden]{display:none!important}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--cobalto);outline-offset:2px;border-radius:8px}
+
+.bar{background:var(--cobalto);color:var(--papel)}
+.bar .in{max-width:1080px;margin:0 auto;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{font-family:var(--display);font-weight:800;font-variation-settings:"wdth" 80;font-size:1.5rem;letter-spacing:-.02em;margin:0}
+.brand span{color:var(--sol)}
+.bar .who{display:flex;align-items:center;gap:12px;font-size:.92rem;color:rgba(247,248,255,.8)}
+
+.wrap{max-width:1080px;margin:0 auto;padding:24px 20px 60px}
+.btn{cursor:pointer;display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 18px;border-radius:999px;border:0;background:var(--sol);color:var(--tinta);font-weight:700;text-decoration:none;white-space:nowrap}
+.btn.line{background:transparent;box-shadow:inset 0 0 0 2px var(--tinta)}
+.btn.on-blue{background:transparent;color:var(--papel);box-shadow:inset 0 0 0 2px rgba(247,248,255,.6)}
+.btn.small{min-height:36px;padding:0 14px;font-size:.92rem}
+.btn[disabled]{opacity:.55;cursor:wait}
+
+/* login */
+.login{max-width:400px;margin:8vh auto 0;padding:28px 24px;background:var(--branco);border-radius:22px;box-shadow:0 6px 0 var(--linha)}
+.login h1{margin:0 0 6px;font-family:var(--display);font-weight:800;font-variation-settings:"wdth" 80;font-size:2.2rem;line-height:1;letter-spacing:-.02em}
+.login p{margin:0 0 20px;color:var(--tinta-suave)}
+.login label{display:block;margin:0 0 6px;font-weight:700}
+.field{display:block;width:100%;min-height:48px;margin:0 0 14px;padding:0 14px;border-radius:12px;border:2px solid var(--tinta);background:#fff}
+.msg{margin:0 0 14px;padding:10px 14px;border-radius:12px;background:var(--rosa);font-weight:700}
+
+/* números */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:0 0 28px}
+.stat{padding:16px 18px;background:var(--branco);border-radius:18px;box-shadow:0 4px 0 var(--linha)}
+.stat b{display:block;font-family:var(--display);font-weight:800;font-variation-settings:"wdth" 80;font-size:2.4rem;line-height:1;letter-spacing:-.02em}
+.stat span{display:block;margin-top:6px;font-size:.92rem;color:var(--tinta-suave)}
+
+.cols{display:grid;grid-template-columns:1fr;gap:28px}
+@media (min-width:900px){ .cols{grid-template-columns:minmax(0,1fr) 320px} }
+h2.sec{margin:0 0 12px;font-family:var(--display);font-weight:800;font-variation-settings:"wdth" 85;font-size:1.45rem;letter-spacing:-.01em}
+
+/* ferramentas */
+.tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:0 0 14px}
+.tools .field{flex:1 1 220px;margin:0}
+.tools select.field{flex:0 1 200px}
+.upd{font-size:.88rem;color:var(--tinta-suave);margin:0 0 12px}
+
+/* lista */
+.list{display:grid;gap:10px}
+.row{background:var(--branco);border-radius:16px;box-shadow:0 3px 0 var(--linha);overflow:hidden}
+.row-top{display:grid;grid-template-columns:auto 1fr auto;gap:6px 14px;align-items:center;padding:14px 16px}
+.code{font-family:var(--display);font-weight:800;color:var(--cobalto);font-size:1.05rem}
+.name{font-weight:700;font-size:1.05rem;min-width:0;overflow:hidden;text-overflow:ellipsis}
+.meta{grid-column:2 / 4;font-size:.9rem;color:var(--tinta-suave)}
+.score{display:inline-block;padding:2px 10px;border-radius:999px;background:var(--papel);font-weight:700;color:var(--tinta)}
+.gift{min-height:38px;padding:0 14px;border-radius:999px;border:0;cursor:pointer;font-weight:700;background:var(--sol)}
+.gift.done{background:var(--mangue)}
+.more{border:0;background:none;color:var(--cobalto);font-weight:700;cursor:pointer;padding:0 16px 14px;text-decoration:underline}
+.detail{padding:0 16px 18px;border-top:2px dashed var(--linha)}
+.detail dl{margin:14px 0 0;display:grid;gap:12px}
+.detail dt{font-size:.85rem;color:var(--tinta-suave)}
+.detail dd{margin:2px 0 0;white-space:pre-wrap}
+.quiz-dots{display:flex;gap:5px;flex-wrap:wrap}
+.quiz-dots i{display:inline-grid;place-items:center;min-width:30px;height:26px;padding:0 6px;border-radius:8px;font-style:normal;font-size:.8rem;font-weight:700}
+.quiz-dots i.c{background:var(--mangue)} .quiz-dots i.e{background:var(--rosa)}
+.photo{display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap}
+.photo img{width:160px;max-width:100%;border-radius:12px;border:2px solid var(--tinta);background:var(--papel)}
+.obs{display:flex;gap:8px;margin-top:4px}
+.obs .field{margin:0;min-height:40px}
+.empty{padding:28px 20px;background:var(--branco);border-radius:16px;text-align:center;color:var(--tinta-suave)}
+
+/* acertos por pergunta */
+.side{display:grid;gap:22px;align-content:start}
+.panel{padding:18px;background:var(--branco);border-radius:18px;box-shadow:0 4px 0 var(--linha)}
+.qbar{margin:0 0 12px}
+.qbar:last-child{margin:0}
+.qbar .lab{display:flex;justify-content:space-between;gap:10px;font-size:.92rem;margin:0 0 4px}
+.qbar .lab b{font-family:var(--display);font-weight:800}
+.track{height:12px;border-radius:6px;background:var(--papel);overflow:hidden}
+.track i{display:block;height:100%;border-radius:6px;background:var(--cobalto)}
+.qbar.low .track i{background:var(--rosa)}
+.note{margin:12px 0 0;font-size:.86rem;color:var(--tinta-suave)}
+.kv{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-top:1px solid var(--linha);font-size:.95rem}
+.kv:first-child{border-top:0}
+@media (max-width:560px){ .bar .who span{display:none} .brand{font-size:1.25rem} }
+</style>
+</head>
+<body>
+
+<header class="bar"><div class="in">
+  <p class="brand">Juventude tem <span>voz</span> · painel</p>
+  <div class="who" id="who" hidden><span id="who-mail"></span><button class="btn on-blue small" id="sair" type="button">Sair</button></div>
+</div></header>
+
+<!-- LOGIN -->
+<section class="login" id="v-login" hidden>
+  <h1>Entrar no painel</h1>
+  <p>Acesso só da equipe do CRJ Flexal.</p>
+  <p class="msg" id="login-msg" hidden></p>
+  <form id="login-form">
+    <label for="email">E-mail</label>
+    <input class="field" id="email" type="email" autocomplete="username" required>
+    <label for="senha">Senha</label>
+    <input class="field" id="senha" type="password" autocomplete="current-password" required>
+    <button class="btn" id="entrar" type="submit">Entrar</button>
+  </form>
+</section>
+
+<section class="login" id="v-config" hidden>
+  <h1>Falta configurar</h1>
+  <p>Preencha o arquivo config.js com a URL e a chave pública do Supabase para o painel funcionar.</p>
+</section>
+
+<!-- PAINEL -->
+<main class="wrap" id="v-app" hidden>
+  <div class="stats" id="stats"></div>
+
+  <div class="cols">
+    <div>
+      <h2 class="sec">Quem participou</h2>
+      <div class="tools">
+        <input class="field" id="busca" type="search" placeholder="Buscar por nome ou código" aria-label="Buscar por nome ou código">
+        <select class="field" id="filtro" aria-label="Filtrar">
+          <option value="todos">Todos</option>
+          <option value="sem">Brinde pendente</option>
+          <option value="com">Brinde entregue</option>
+          <option value="foto">Com foto</option>
+        </select>
+        <button class="btn line" id="atualizar" type="button">Atualizar</button>
+        <button class="btn" id="exportar" type="button">Exportar planilha (CSV)</button>
+      </div>
+      <p class="upd" id="upd"></p>
+      <div class="list" id="lista"></div>
+    </div>
+
+    <aside class="side">
+      <div class="panel">
+        <h2 class="sec">Acerto por pergunta</h2>
+        <div id="perguntas"></div>
+        <p class="note">Em rosa, os temas com menos de 60% de acerto: vale retomar na devolutiva.</p>
+      </div>
+      <div class="panel">
+        <h2 class="sec">Por oficina ou grupo</h2>
+        <div id="oficinas"></div>
+      </div>
+      <div class="panel">
+        <h2 class="sec">Encontros do circuito</h2>
+        <div id="encontros"></div>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="config.js"></script>
+<script>
+const TEMAS = ["Nada sobre nós, sem nós","Participação no dia a dia","Estatuto, art. 4º","Dinâmica de agosto","Votação das prioridades","Documentário de setembro","Nova parte do documentário","Avaliar é participar"];
+const OFICINAS = ["Percussão","Dança","Capoeira","Muay Thai","Artes","LAB Estúdio","La Liga","Outra"];
+const CFG = window.JTV_CONFIG || {};
+const $ = (id) => document.getElementById(id);
+let sb = null, linhas = [], abertas = new Set(), fotos = {};
+
+function el(tag, attrs, ...kids){
+  const e = document.createElement(tag);
+  if (attrs) for (const [k, v] of Object.entries(attrs)) {
+    if (k === "class") e.className = v; else if (k === "text") e.textContent = v;
+    else if (k.startsWith("on")) e.addEventListener(k.slice(2), v); else e.setAttribute(k, v);
+  }
+  kids.flat().forEach(k => k != null && e.append(k));
+  return e;
+}
+const dataBR = (s) => { const d = new Date(s); return d.toLocaleDateString("pt-BR",{day:"2-digit",month:"2-digit"}) + " " + d.toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"}); };
+const chave = (n) => (n || "").trim().toLowerCase().replace(/\s+/g," ");
+
+/* ---------- início ---------- */
+if (!CFG.supabaseUrl || !CFG.supabaseAnonKey || !window.supabase){
+  $("v-config").hidden = false;
+} else {
+  sb = window.supabase.createClient(CFG.supabaseUrl, CFG.supabaseAnonKey);
+  sb.auth.getSession().then(({data}) => data.session ? entrou(data.session) : ($("v-login").hidden = false));
+}
+
+$("login-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  $("entrar").disabled = true; $("login-msg").hidden = true;
+  const { data, error } = await sb.auth.signInWithPassword({ email: $("email").value.trim(), password: $("senha").value });
+  $("entrar").disabled = false;
+  if (error){ $("login-msg").textContent = "E-mail ou senha não conferem. Confira e tente de novo."; $("login-msg").hidden = false; return; }
+  entrou(data.session);
+});
+$("sair").addEventListener("click", async () => { await sb.auth.signOut(); location.reload(); });
+
+function entrou(session){
+  $("v-login").hidden = true; $("v-app").hidden = false; $("who").hidden = false;
+  $("who-mail").textContent = session.user.email || "";
+  carrega();
+  setInterval(() => { if (!document.hidden) carrega(true); }, 30000);
+}
+
+/* ---------- dados ---------- */
+async function carrega(silencioso){
+  if (!silencioso) $("atualizar").disabled = true;
+  const { data, error } = await sb.from("respostas").select("*").order("criado_em", { ascending: false }).limit(2000);
+  $("atualizar").disabled = false;
+  if (error){ $("upd").textContent = "Não deu pra carregar agora. Confira a internet e clique em Atualizar."; return; }
+  linhas = data || [];
+  $("upd").textContent = "Atualizado às " + new Date().toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"}) + ". A lista se atualiza sozinha a cada 30 segundos.";
+  desenha();
+}
+$("atualizar").addEventListener("click", () => carrega());
+$("busca").addEventListener("input", desenhaLista);
+$("filtro").addEventListener("change", desenhaLista);
+
+function desenha(){ desenhaNumeros(); desenhaLista(); desenhaLaterais(); }
+
+function desenhaNumeros(){
+  const unicos = new Set(linhas.map(l => chave(l.nome))).size;
+  const media = linhas.length ? (linhas.reduce((s,l) => s + l.acertos, 0) / linhas.length) : 0;
+  const brindes = linhas.filter(l => l.brinde_entregue).length;
+  const comFoto = linhas.filter(l => l.foto_path).length;
+  const autoriz = linhas.filter(l => l.autorizacao && l.autorizacao.startsWith("Sim")).length;
+  const itens = [
+    [unicos, "jovens participaram"],
+    [linhas.length, "envios no total"],
+    [media.toFixed(1).replace(".", ","), "placar médio, de 8"],
+    [brindes + " / " + linhas.length, "brindes entregues"],
+    [comFoto, "fotos recebidas"],
+    [autoriz, "autorizaram uso na devolutiva"]
+  ];
+  $("stats").replaceChildren(...itens.map(([n, t]) => el("div",{class:"stat"}, el("b",{text:String(n)}), el("span",{text:t}))));
+}
+
+function filtradas(){
+  const q = chave($("busca").value); const f = $("filtro").value;
+  return linhas.filter(l => {
+    if (q && !chave(l.nome).includes(q) && !l.codigo.toLowerCase().includes(q)) return false;
+    if (f === "sem" && l.brinde_entregue) return false;
+    if (f === "com" && !l.brinde_entregue) return false;
+    if (f === "foto" && !l.foto_path) return false;
+    return true;
+  });
+}
+
+function desenhaLista(){
+  const nomes = {}; linhas.forEach(l => { const k = chave(l.nome); nomes[k] = (nomes[k] || 0) + 1; });
+  const rows = filtradas();
+  if (!rows.length){
+    $("lista").replaceChildren(el("div",{class:"empty", text: linhas.length ? "Ninguém com esse filtro." : "Ainda não chegou nenhuma resposta. Quando o primeiro jovem enviar, ele aparece aqui."}));
+    return;
+  }
+  $("lista").replaceChildren(...rows.map(l => linha(l, nomes[chave(l.nome)] > 1)));
+}
+
+function linha(l, repetido){
+  const aberta = abertas.has(l.numero);
+  const gift = el("button", {class: "gift" + (l.brinde_entregue ? " done" : ""), type:"button",
+    text: l.brinde_entregue ? "Brinde entregue" : "Entregar brinde",
+    onclick: () => marcaBrinde(l, gift)});
+  const meta = [ (l.oficinas || []).join(", ") || "Sem oficina", dataBR(l.criado_em) ];
+  if (repetido) meta.push("nome repetido");
+  const top = el("div",{class:"row-top"},
+    el("span",{class:"code", text:l.codigo}),
+    el("span",{class:"name", text:l.nome}),
+    gift,
+    el("span",{class:"meta"}, el("span",{class:"score", text: l.acertos + " de 8"}), "  ", meta.join(" · "))
+  );
+  const box = el("div",{class:"row"}, top);
+  const det = el("div",{class:"detail"});
+  const btn = el("button",{class:"more", type:"button", text: aberta ? "Fechar" : "Ver respostas e memória",
+    onclick: () => { if (abertas.has(l.numero)) abertas.delete(l.numero); else abertas.add(l.numero); desenhaLista(); }});
+  box.append(btn);
+  if (aberta){ preencheDetalhe(det, l); box.append(det); }
+  return box;
+}
+
+function campo(t, v){ return v ? [el("dt",{text:t}), el("dd",{text:v})] : []; }
+
+function preencheDetalhe(det, l){
+  const dots = el("div",{class:"quiz-dots"}, (l.resultado || []).map((ok, k) => el("i",{class: ok ? "c" : "e", title: TEMAS[k], text: "P" + (k+1)})));
+  const dl = el("dl", null,
+    el("dt",{text:"Quiz (verde = acertou)"}), el("dd",null,dots),
+    campo("Encontros do circuito", (l.encontros || []).join(", ")),
+    campo("Minha opinião é ouvida no CRJ", l.escala_opiniao ? l.escala_opiniao + " de 5" : ""),
+    campo("Posso participar das decisões do território", l.escala_decisoes ? l.escala_decisoes + " de 5" : ""),
+    campo("Atividade que mais marcou", l.atividade_marcou),
+    campo("Se a decisão fosse sua", l.se_a_decisao),
+    campo("O que o CRJ representa", l.crj_representa),
+    campo("Aprendizados e equipe", l.aprendizados),
+    campo("Momento marcante", l.momento_marcante),
+    campo("Autorização de uso", l.autorizacao)
+  );
+  if (l.foto_path){
+    const holder = el("div",{class:"photo"}, el("span",{text:"Carregando foto…"}));
+    dl.append(el("dt",{text:"Foto" + (l.foto_sobre ? ": " + l.foto_sobre : "")}), el("dd",null,holder));
+    mostraFoto(l, holder);
+  }
+  const obs = el("input",{class:"field", type:"text", value: l.observacao || "", placeholder:"Observação da equipe", "aria-label":"Observação"});
+  const salvar = el("button",{class:"btn line small", type:"button", text:"Salvar", onclick: async () => {
+    salvar.disabled = true;
+    const { error } = await sb.from("respostas").update({ observacao: obs.value.trim() || null }).eq("numero", l.numero);
+    salvar.disabled = false; salvar.textContent = error ? "Não salvou" : "Salvo";
+    if (!error) l.observacao = obs.value.trim() || null;
+  }});
+  dl.append(el("dt",{text:"Observação"}), el("dd",null, el("div",{class:"obs"}, obs, salvar)));
+  det.append(dl);
+}
+
+async function mostraFoto(l, holder){
+  let url = fotos[l.foto_path];
+  if (!url){
+    const { data, error } = await sb.storage.from("memoria-fotos").createSignedUrl(l.foto_path, 3600);
+    if (error || !data){ holder.replaceChildren(el("span",{text:"Não deu pra abrir a foto agora."})); return; }
+    url = fotos[l.foto_path] = data.signedUrl;
+  }
+  const nomeArq = l.codigo + " - " + l.nome + ".jpg";
+  holder.replaceChildren(
+    el("img",{src:url, alt:"Foto enviada por " + l.nome}),
+    el("a",{class:"btn line small", href: url + "&download=" + encodeURIComponent(nomeArq), text:"Baixar foto"})
+  );
+}
+
+async function marcaBrinde(l, btn){
+  const novo = !l.brinde_entregue;
+  btn.disabled = true;
+  const { error } = await sb.from("respostas").update({ brinde_entregue: novo, brinde_em: novo ? new Date().toISOString() : null }).eq("numero", l.numero);
+  btn.disabled = false;
+  if (error){ btn.textContent = "Não salvou, tente de novo"; return; }
+  l.brinde_entregue = novo; l.brinde_em = novo ? new Date().toISOString() : null;
+  desenhaNumeros(); desenhaLista();
+}
+
+function desenhaLaterais(){
+  const n = linhas.length;
+  $("perguntas").replaceChildren(...TEMAS.map((t, k) => {
+    const ok = linhas.filter(l => l.resultado && l.resultado[k]).length;
+    const pct = n ? Math.round(ok / n * 100) : 0;
+    return el("div",{class:"qbar" + (n && pct < 60 ? " low" : "")},
+      el("div",{class:"lab"}, el("span",{text:"P" + (k+1) + " " + t}), el("b",{text: pct + "%"})),
+      el("div",{class:"track"}, el("i",{style:"width:" + pct + "%"})));
+  }));
+  $("oficinas").replaceChildren(...OFICINAS.map(o => el("div",{class:"kv"}, el("span",{text:o}), el("b",{text:String(linhas.filter(l => (l.oficinas||[]).includes(o)).length)}))));
+  const enc = [["Agosto", "Agosto"], ["Setembro", "Setembro"], ["Nenhum encontro", "Não participei"]];
+  $("encontros").replaceChildren(...enc.map(([t, k]) => el("div",{class:"kv"}, el("span",{text:t}), el("b",{text:String(linhas.filter(l => (l.encontros||[]).some(e => e.startsWith(k))).length)}))));
+}
+
+/* ---------- exportar ---------- */
+$("exportar").addEventListener("click", () => {
+  const cab = ["Código","Data/hora","Nome","Oficina/grupo","Encontros do circuito","Acertos (de 8)"].concat(TEMAS.map((t,k) => "P" + (k+1) + " " + t)).concat(["Minha opinião é ouvida (1-5)","Posso participar das decisões (1-5)","Atividade que mais marcou","Se a decisão fosse sua","O que o CRJ representa","Aprendizados e equipe","Momento marcante","Tem foto","Sobre a foto","Autorização de uso","Brinde entregue","Observação"]);
+  const esc = (v) => { let s = v == null ? "" : String(v); if (/^[=+\-@]/.test(s)) s = "'" + s; return '"' + s.replace(/"/g,'""') + '"'; };
+  const rows = linhas.slice().reverse().map(l => [l.codigo, dataBR(l.criado_em), l.nome, (l.oficinas||[]).join(", "), (l.encontros||[]).join(", "), l.acertos]
+    .concat((l.resultado||[]).map(r => r ? "Certo" : "Errado"))
+    .concat([l.escala_opiniao, l.escala_decisoes, l.atividade_marcou, l.se_a_decisao, l.crj_representa, l.aprendizados, l.momento_marcante, l.foto_path ? "Sim" : "Não", l.foto_sobre, l.autorizacao, l.brinde_entregue ? "Sim" : "Não", l.observacao]));
+  const csv = "﻿" + [cab].concat(rows).map(r => r.map(esc).join(";")).join("\r\n");
+  const a = el("a",{href: URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8"})), download: "juventude-tem-voz-" + new Date().toISOString().slice(0,10) + ".csv"});
+  document.body.append(a); a.click(); a.remove();
+});
+</script>
+</body>
+</html>
